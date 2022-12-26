@@ -1,22 +1,18 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, View, Image } from 'react-native';
 import { Card } from 'react-native-elements'
-
-const logo = {
-  uri: 'https://www.allrecipes.com/thmb/c_2gXiAwkO6u1UJCY-1eAVCy0h0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/54679_perfect-baked-potato-Rita-1x1-1-91711252bb3740088c8ea55c5f9bef1c.jpg',
-  width: 200,
-  height: 200
-};
+import { fonts } from 'react-native-elements/dist/config';
 
 const styles = StyleSheet.create({
   container: {
    flex: 1,
-   paddingTop: 22
+   paddingTop: 22,
+   backgroundColor : '#b9def0'
   },
   item: {
+    flex : 1,
     padding: 10,
     fontSize: 18,
-    height: 44,
   },
 });
 
@@ -25,15 +21,14 @@ const FlatListBasics = () => {
     <View style={styles.container}>
       <FlatList
         data={[
-          {key: 'Backed Potato'},
+          {key: 'Backed Potato2'},
           {key: 'Sushi'},
           {key: 'etel'},
-          {key: 'etel2'},
-        ]}
+          {key: 'etel2'}]}
         renderItem={({item}) => 
-        <Card title='HELLO WORLD'>
-          <Image source={logo} />
-          <Text style={{margin: 10}}>
+        <Card containerStyle={{backgroundColor: '#f4faf0'}}>
+          <Image source={require('./Images/B.jpg')} style={{ width: null, height: 250 }}/>
+          <Text style={{margin: 10, fontSize: 22, fontWeight: 'bold'}}>
             {item.key}
           </Text>
         </Card>   
