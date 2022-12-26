@@ -1,23 +1,27 @@
 import React from 'react';
-import { FlatList, StyleSheet, View} from 'react-native';
+import { FlatList, StyleSheet, View, ImageBackground} from 'react-native';
 import FoodCard from './src/FoodCard'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 10,
-    backgroundColor: '#b9def0'
+    paddingTop: 10
   },
   item: {
     flex: 1,
     padding: 5,
     fontSize: 18,
   },
+  image: {
+    flex: 1,
+    justifyContent: "center"
+  },
 });
 
 const FlatListBasics = () => {
   return (
     <View style={styles.container}>
+      <ImageBackground source={require('./images/bg.png')} resizeMode="cover" style={styles.image}>
       <FlatList
         data={[
           { key: 'Backed Potato2' },
@@ -27,11 +31,12 @@ const FlatListBasics = () => {
           { key: 'etel3' }]}
         renderItem={({ item }) =>
           <View style={{ flexDirection: 'row' }}>
-            <FoodCard/>
-            <FoodCard/>
+            <FoodCard name={item.key}/>
+            <FoodCard name={item.key}/>
           </View>
         }
       />
+      </ImageBackground>
     </View>
   );
 }
