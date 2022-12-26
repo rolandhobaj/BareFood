@@ -9,7 +9,7 @@ export default class FoodCard extends Component {
       <Card containerStyle={styles.container}>
         <Image source={require('../images/B.jpg')} style={styles.image} />
         <Text style={styles.text}>
-          Hihi
+          {this.props.name}
         </Text>
       </Card>
     )
