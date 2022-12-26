@@ -7,14 +7,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 10
   },
-  item: {
-    flex: 1,
-    padding: 5,
-    fontSize: 18,
-  },
   image: {
     flex: 1,
-    justifyContent: "center"
   },
 });
 
@@ -26,9 +20,9 @@ const FlatListBasics = () => {
         data={[
           { key: 'Backed Potato2' },
           { key: 'Sushi' },
-          { key: 'etel' },
-          { key: 'etel2' },
-          { key: 'etel3' }]}
+          { key: 'Etel' },
+          { key: 'Etel2' },
+          { key: 'Etel3' }]}
         renderItem={({ item }) =>
           <View style={{ flexDirection: 'row' }}>
             <FoodCard name={item.key}/>
