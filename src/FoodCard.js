@@ -17,18 +17,18 @@ export default class FoodCard extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(16,4,122,0.35)',
+    backgroundColor: 'rgba(18,57,6,0.35)',
     flex: 1,
     textAlignVertical: 'center',
     borderRadius:40,
     margin:10,
     padding:10,
-    
+    borderRadius: 10,
+    padding: 10,
   },
   image: {
     width: null, 
     height: 130, 
-    borderRadius: 40,
   },
   text: {
     marginTop:10,

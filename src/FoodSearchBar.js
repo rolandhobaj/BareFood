@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
       borderBottomColor: 0
     },
     inputContainer: {
-      backgroundColor: 'rgba(16,4,122,0.35)'
+      backgroundColor: 'rgba(18,57,60,0.35)'
     },
     iconStyle: {
       color: '#ffffff',
