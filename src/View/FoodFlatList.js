@@ -1,5 +1,5 @@
 import { React, Component } from 'react'
-import { FlatList, View } from 'react-native';
+import { FlatList, View, Text } from 'react-native';
 
 import FoodCard from './FoodCard'
 import RecipeService from '../Service/RecipeService'
@@ -7,7 +7,7 @@ import RecipeService from '../Service/RecipeService'
 export default class FoodFlatList extends Component {
 
     getMappedRecipes(){
-        const Data = RecipeService.getAllRecipe();
+        const Data = RecipeService.getAllRecipe().sort((a, b) => a.key.toUpperCase() > b.key.toUpperCase());
 
         const chunkSize = 2;
         let recipes = [];
@@ -34,9 +34,8 @@ export default class FoodFlatList extends Component {
                 data={this.getMappedRecipes()}
                 renderItem={({ item }) =>
                     <View style={{ flexDirection: 'row' }}>
-                        <FoodCard style={{flex:1}} name={item.firstKey}/>
-                        {item.secondKey!= null ? <FoodCard name={item.secondKey}/>: null }
-                        
+                        <FoodCard style={{flex:2}} name={item.firstKey}/>
+                        {item.secondKey!= null ? <FoodCard name={item.secondKey}/>: <View style={{width:'50%'}}/> }
                     </View>
                 }
           />
