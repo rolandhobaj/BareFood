@@ -3,4 +3,6 @@ export default class Recipe{
         this.name = name;
         this.tags = tags;
     }
+
+    tags=[];
 }

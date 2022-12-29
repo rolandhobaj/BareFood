@@ -1,18 +1,16 @@
 import { SearchBar } from 'react-native-elements';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import useStore from '../Model/Store'
 
-export default class FoodSearchBar extends React.Component {
-  state = {
-    search: '',
-  };
+export default function FoodSearchBar(){
+  const [search, setSearch] = useState(0);
+  const modifyTag = useStore(s => s.modifyTag);
 
-  updateSearch = (search) => {
-    this.setState({ search });
-  };
-
-  render() {
-    const { search } = this.state;
+  const updateTag = function(tag){
+    setSearch(tag);
+    modifyTag(tag);
+  }
 
     return (
       <View>
@@ -23,22 +21,21 @@ export default class FoodSearchBar extends React.Component {
           placeholderTextColor='white'
           placeholder="Írj ide..."
           searchIcon={{color:'white'}}
-          onChangeText={this.updateSearch}
+          onChangeText={updateTag}
           value={search}/>
           <View style={styles.quickSearchContainer}>
-          <TouchableOpacity style={styles.quickSearch} onPress={() => this.updateSearch("Ebéd")}>
+          <TouchableOpacity style={styles.quickSearch} onPress={() => updateTag("Ebéd")}>
             <Text style={styles.innerText}>Ebéd</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.quickSearch} onPress={() => this.updateSearch("Vacsi")}>
+          <TouchableOpacity style={styles.quickSearch} onPress={() => updateTag("Vacsi")}>
             <Text style={styles.innerText}>Vacsi</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.quickSearch} onPress={() => this.updateSearch("Desszert")}>
+          <TouchableOpacity style={styles.quickSearch} onPress={() => updateTag("Desszert")}>
             <Text style={styles.innerText}>Desszert</Text>
           </TouchableOpacity>
         </View>
       </View>
     );
-  }
 }
 
 const styles = StyleSheet.create({
