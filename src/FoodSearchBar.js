@@ -16,27 +16,26 @@ export default class FoodSearchBar extends React.Component {
 
     return (
       <View>
-      <SearchBar
-        containerStyle={styles.container}
-        inputContainerStyle={styles.inputContainer}
-        inputStyle={styles.iconStyle}
-        placeholderTextColor='white'
-        placeholder="Írj ide..."
-        searchIcon={{color:'white'}}
-        onChangeText={this.updateSearch}
-        value={search}
-      />
-      <View style={styles.quickSearchContainer}>
-        <TouchableOpacity style={styles.quickSearch} onPress={() => this.updateSearch("Ebéd")}>
-          <Text style={styles.innerText}>Ebéd</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.quickSearch} onPress={() => this.updateSearch("Vacsi")}>
-          <Text style={styles.innerText}>Vacsi</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.quickSearch} onPress={() => this.updateSearch("Desszert")}>
-          <Text style={styles.innerText}>Desszert</Text>
-        </TouchableOpacity>
-      </View>
+        <SearchBar
+          containerStyle={styles.container}
+          inputContainerStyle={styles.inputContainer}
+          inputStyle={styles.iconStyle}
+          placeholderTextColor='white'
+          placeholder="Írj ide..."
+          searchIcon={{color:'white'}}
+          onChangeText={this.updateSearch}
+          value={search}/>
+          <View style={styles.quickSearchContainer}>
+          <TouchableOpacity style={styles.quickSearch} onPress={() => this.updateSearch("Ebéd")}>
+            <Text style={styles.innerText}>Ebéd</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.quickSearch} onPress={() => this.updateSearch("Vacsi")}>
+            <Text style={styles.innerText}>Vacsi</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.quickSearch} onPress={() => this.updateSearch("Desszert")}>
+            <Text style={styles.innerText}>Desszert</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
