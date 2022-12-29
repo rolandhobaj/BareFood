@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, StyleSheet, View, ImageBackground} from 'react-native';
-import FoodCard from './src/FoodCard'
-import FoodSearchBar from './src/FoodSearchBar'
+import FoodCard from './src/View/FoodCard'
+import FoodSearchBar from './src/View/FoodSearchBar'
 
 const styles = StyleSheet.create({
   container: {
