@@ -27,13 +27,13 @@ export default class FoodSearchBar extends React.Component {
         value={search}
       />
       <View style={styles.quickSearchContainer}>
-        <TouchableOpacity style={styles.quickSearch}>
+        <TouchableOpacity style={styles.quickSearch} onPress={() => this.updateSearch("Ebéd")}>
           <Text style={styles.innerText}>Ebéd</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.quickSearch}>
+        <TouchableOpacity style={styles.quickSearch} onPress={() => this.updateSearch("Vacsi")}>
           <Text style={styles.innerText}>Vacsi</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.quickSearch}>
+        <TouchableOpacity style={styles.quickSearch} onPress={() => this.updateSearch("Desszert")}>
           <Text style={styles.innerText}>Desszert</Text>
         </TouchableOpacity>
       </View>
