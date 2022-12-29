@@ -20,7 +20,7 @@ const FlatListBasics = () => {
       <FoodSearchBar/>
       <FlatList
         data={[
-          { key: 'Backed Potato2' },
+          { key: 'Sült pityi' },
           { key: 'Sushi' },
           { key: 'Etel' },
           { key: 'Etel2' },
