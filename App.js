@@ -2,6 +2,7 @@ import React from 'react';
 import { FlatList, StyleSheet, View, ImageBackground} from 'react-native';
 import FoodCard from './src/View/FoodCard'
 import FoodSearchBar from './src/View/FoodSearchBar'
+import RecipeService from './src/Service/RecipeService'
 
 const styles = StyleSheet.create({
   container: {
@@ -19,12 +20,7 @@ const FlatListBasics = () => {
       <ImageBackground source={require('./images/bg.png')} resizeMode="cover" style={styles.image}>
       <FoodSearchBar/>
       <FlatList
-        data={[
-          { key: 'Sült pityi' },
-          { key: 'Sushi' },
-          { key: 'Etel' },
-          { key: 'Etel2' },
-          { key: 'Etel3' }]}
+        data={RecipeService.getAllRecipe()}
         renderItem={({ item }) =>
           <View style={{ flexDirection: 'row' }}>
             <FoodCard name={item.key}/>
