@@ -8,6 +8,7 @@ export default class RecipeService{
             { key: 'Rizs' },
             { key: 'Sör' },
             { key: 'Víz' },
+            { key: 'Zöldség' },
             { key: 'Pho' }];
     }
 }
