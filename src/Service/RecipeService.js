@@ -1,18 +1,16 @@
+import Recipe from '../Model/Recipe'
+
 export default class RecipeService{
    static getAllRecipe(){
         return [
-            { key: 'Alma' },
-            { key: 'Körte' },
-            { key: 'Sült Pityi' },
-            { key: 'Sushi' },
-            { key: 'Rizs' },
-            { key: 'Sör' },
-            { key: 'Víz' },
-            { key: 'Citrom' },
-            { key: 'Zöldség' },
-            { key: 'Zöldség2' },
-            { key: 'Dinnye' },
-            { key: 'Zöldség3' },
-            { key: 'Pho' }];
+            new Recipe("Alma", ["Vacsi", "Desszert"]),
+            new Recipe("Sör", ["Ebéd", "Desszert"]),
+            new Recipe("Sushi", ["Vacsi", "Ebéd"]),
+            new Recipe("Kivájt Pityi", ["Vacsi"]),
+            new Recipe("Töltött káposzta", ["Ebéd"]),
+            new Recipe("Húsimádó pizza", ["Vacs", "Ebéd"]),
+            new Recipe("Somlói", ["Desszert"]),
+            new Recipe("Fagyi", ["Desszert"]),
+            ];
     }
 }

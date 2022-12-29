@@ -7,7 +7,7 @@ import RecipeService from '../Service/RecipeService'
 export default class FoodFlatList extends Component {
 
     getMappedRecipes(){
-        const Data = RecipeService.getAllRecipe().sort((a, b) => a.key.toUpperCase() > b.key.toUpperCase());
+        const Data = RecipeService.getAllRecipe().sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase());
 
         const chunkSize = 2;
         let recipes = [];
@@ -15,12 +15,12 @@ export default class FoodFlatList extends Component {
             const chunk = Data.slice(i, i + chunkSize);
             if (chunk.length >= 2){
                 recipes.push({
-                    firstKey:chunk[0].key,
-                    secondKey:chunk[1].key
+                    firstKey:chunk[0].name,
+                    secondKey:chunk[1].name
                 })
             } else {
                 recipes.push({
-                    firstKey:chunk[0].key,
+                    firstKey:chunk[0].name,
                     secondKey:null
                 })
             }
