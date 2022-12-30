@@ -23,6 +23,11 @@ function removeSpecialCharacters(text) {
 function filter(data, tag){
     let searchedTag = removeSpecialCharacters(tag.toUpperCase());
     return data.filter(r => {
+        let recipeName = removeSpecialCharacters(r.name.toUpperCase());
+        if (recipeName.includes(searchedTag)){
+            return true
+        }
+
         for (let i = 0; i < r.tags.length; i++) {
             let recipeTag = removeSpecialCharacters(r.tags[i].toUpperCase());
             if (recipeTag.includes(searchedTag)){
