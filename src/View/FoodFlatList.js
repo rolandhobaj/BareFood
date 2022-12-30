@@ -6,10 +6,26 @@ import RecipeService from '../Service/RecipeService'
 import useStore from '../Model/Store'
 
 
+function removeSpecialCharacters(text) {
+    text = text.replace('Á', 'A');
+    text = text.replace('É', 'E');
+    text = text.replace('Í', 'I');
+    text = text.replace('Ó', 'O');
+    text = text.replace('Ö', 'O');
+    text = text.replace('Ő', 'O');
+    text = text.replace('Ú', 'U');
+    text = text.replace('Ü', 'U');
+    text = text.replace('Ű', 'U');
+ 
+    return text;
+  }
+
 function filter(data, tag){
+    let searchedTag = removeSpecialCharacters(tag.toUpperCase());
     return data.filter(r => {
         for (let i = 0; i < r.tags.length; i++) {
-            if (r.tags[i].toUpperCase().includes(tag.toUpperCase())){
+            let recipeTag = removeSpecialCharacters(r.tags[i].toUpperCase());
+            if (recipeTag.includes(searchedTag)){
                 return true;
             }
         }
