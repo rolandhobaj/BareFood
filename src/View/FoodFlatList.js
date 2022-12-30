@@ -5,10 +5,23 @@ import FoodCard from './FoodCard'
 import RecipeService from '../Service/RecipeService'
 import useStore from '../Model/Store'
 
+
+function filter(data, tag){
+    return data.filter(r => {
+        for (let i = 0; i < r.tags.length; i++) {
+            if (r.tags[i].toUpperCase().includes(tag.toUpperCase())){
+                return true;
+            }
+        }
+
+        return false;
+    });
+}
+
 function getMappedRecipes(tag){
     let Data = RecipeService.getAllRecipe().sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase());
     if (tag !== ''){
-       Data =  Data.filter(r => r.tags.includes(tag));
+       Data =  filter(Data, tag);
     }
 
     const chunkSize = 2;
