@@ -24,14 +24,14 @@ export default function FoodSearchBar(){
           onChangeText={updateTag}
           value={search}/>
           <View style={styles.quickSearchContainer}>
-          <TouchableOpacity style={styles.quickSearch} onPress={() => updateTag("Ebéd")}>
-            <Text style={styles.innerText}>Ebéd</Text>
+          <TouchableOpacity style={styles.quickSearch} onPress={() => updateTag("Leves")}>
+            <Text style={styles.innerText}>Leves</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.quickSearch} onPress={() => updateTag("Vacsi")}>
-            <Text style={styles.innerText}>Vacsi</Text>
+          <TouchableOpacity style={styles.quickSearch} onPress={() => updateTag("Főétel")}>
+            <Text style={styles.innerText}>Főétel</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.quickSearch} onPress={() => updateTag("Desszert")}>
-            <Text style={styles.innerText}>Desszert</Text>
+          <TouchableOpacity style={styles.quickSearch} onPress={() => updateTag("Köret")}>
+            <Text style={styles.innerText}>Köret</Text>
           </TouchableOpacity>
         </View>
       </View>
