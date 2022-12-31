@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, StyleSheet, View, Text, Button } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, Button, TextInput } from 'react-native';
 import Modal from "react-native-modal";
 import { Icon } from '@rneui/themed';
 
@@ -19,11 +19,34 @@ export default function NewRecipeModal(){
              <Icon name='add' color='white' size={40} containerStyle={{margin:5}}
         />
   
-        <Modal isVisible={isModalVisible}>
+        <Modal 
+            isVisible={isModalVisible} 
+            backdropOpacity={0.90}
+            animationIn="fadeIn" animationOut="fadeOut"
+            backdropTransitionOutTiming={0}
+            style={{alignItems:'center', justifyContent:'center'}}>
           <View style={{ flex: 1 }}>
-            <Text>Hello!</Text>
+            <Text style={{color:'white', margin:50, fontSize:25}}>Új recept hozzáadása</Text>
   
-            <Button title="Hide modal" onPress={toggleModal} />
+            <View style={{flexDirection:'row', margin:10}}>
+                <Text style={{color:'white', fontSize:17, padding:2, marginRight:10}}>Név:</Text>
+                <TextInput placeholder="Írj ide.." width='78%' backgroundColor='white' style={{paddingLeft:10, fontSize:17}}/>
+            </View>
+            
+            <View style={{flexDirection:'row', margin:10}}>
+                <Text style={{color:'white', fontSize:17, padding:2, marginRight:10}}>Cimkék:</Text>
+                <TextInput placeholder="Vesszővel elválasztva.." width='69%' backgroundColor='white' style={{paddingLeft:10, fontSize:17}}/>
+            </View>
+
+
+            <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15}}>
+                <TouchableOpacity onPress={toggleModal}>
+                    <Text style={{color:'white',marginLeft:50, fontSize:20, backgroundColor:'rgba(120,184,192,1)', padding:10, paddingLeft:20, paddingRight:20, borderRadius:10}}>Mégse</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={toggleModal}>
+                    <Text style={{color:'white', marginRight:50, fontSize:20, backgroundColor:'rgba(120,184,192,1)', padding:10, paddingLeft:20, paddingRight:20, borderRadius:10}}>Mentés</Text>
+                </TouchableOpacity>
+            </View>
           </View>
         </Modal>
   
