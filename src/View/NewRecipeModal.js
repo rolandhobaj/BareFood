@@ -1,15 +1,35 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, StyleSheet, View, Text, Button, TextInput } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, Button, TextInput, Image } from 'react-native';
 import Modal from "react-native-modal";
 import { Icon } from '@rneui/themed';
+
+import * as ImagePicker from 'expo-image-picker';
 
 
 export default function NewRecipeModal(){
     const [isModalVisible, setModalVisible] = useState(false);
+    const [image, setImage] = useState(null);
 
-    const toggleModal = () => {
+    const toggleModal = async () => {
       setModalVisible(!isModalVisible);
-    };
+     };
+
+     const pickImage = async () => {
+       // No permissions request is necessary for launching the image library
+       let result = await ImagePicker.launchImageLibraryAsync({
+         mediaTypes: ImagePicker.MediaTypeOptions.All,
+         allowsEditing: true,
+         aspect: [4, 3],
+         quality: 1,
+       });
+   
+       console.log(result);
+   
+       if (!result.canceled) {
+         setImage(result.assets[0].uri);
+       }
+     };
+   
   
     return (
       <View>
@@ -38,13 +58,19 @@ export default function NewRecipeModal(){
                 <TextInput placeholder="Vesszővel elválasztva.." width='69%' backgroundColor='white' style={{paddingLeft:10, fontSize:17}}/>
             </View>
 
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              {image && <Image source={{ uri: image }} style={{ width: 200, height: 200, margin: 20 }} />}
+              <TouchableOpacity onPress={pickImage}>
+                    <Text style={{color:'white', fontSize:20, backgroundColor:'rgba(120,184,192,1)', padding:10, paddingLeft:20, paddingRight:20, borderRadius:10}}>Válassz képet..</Text>
+              </TouchableOpacity>
+            </View>
 
-            <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15}}>
+            <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15, marginBottom:30}}>
                 <TouchableOpacity onPress={toggleModal}>
                     <Text style={{color:'white',marginLeft:50, fontSize:20, backgroundColor:'rgba(120,184,192,1)', padding:10, paddingLeft:20, paddingRight:20, borderRadius:10}}>Mégse</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={toggleModal}>
-                    <Text style={{color:'white', marginRight:50, fontSize:20, backgroundColor:'rgba(120,184,192,1)', padding:10, paddingLeft:20, paddingRight:20, borderRadius:10}}>Mentés</Text>
+                    <Text style={{color:'white', marginRight:50, fontSize:20, backgroundColor:'rgba(120,184,192,1)', padding:10, paddingLeft:20, paddingRight:20, borderRadius:10}}>Hozzáadás</Text>
                 </TouchableOpacity>
             </View>
           </View>
