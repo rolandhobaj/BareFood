@@ -6,7 +6,7 @@ export default class FoodCard extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image source={require('../../images/B.jpg')} style={styles.image} />
+        <Image source={require('../../images/pityi.jpg')} style={styles.image} />
         <Text style={styles.text}>
           {this.props.name}
         </Text>
