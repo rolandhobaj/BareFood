@@ -15,7 +15,6 @@ export default function NewRecipeModal(){
      };
 
      const pickImage = async () => {
-       // No permissions request is necessary for launching the image library
        let result = await ImagePicker.launchImageLibraryAsync({
          mediaTypes: ImagePicker.MediaTypeOptions.All,
          allowsEditing: true,
@@ -36,15 +35,13 @@ export default function NewRecipeModal(){
        <TouchableOpacity
           onPress={toggleModal}
           style={styles.roundButton}>
-             <Icon name='add' color='white' size={40} containerStyle={{margin:5}}
-        />
+             <Icon name='add' color='white' size={40} containerStyle={{margin:5}}/>
   
         <Modal 
             isVisible={isModalVisible} 
             backdropOpacity={0.90}
-            animationIn="fadeIn" animationOut="fadeOut"
             backdropTransitionOutTiming={0}
-            style={{alignItems:'center', justifyContent:'center'}}>
+            style={{alignItems:'center', flex:1}}>
           <View style={{ flex: 1 }}>
             <Text style={{color:'white', margin:50, fontSize:25}}>Új recept hozzáadása</Text>
   
@@ -65,12 +62,12 @@ export default function NewRecipeModal(){
               </TouchableOpacity>
             </View>
 
-            <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15, marginBottom:30}}>
+            <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15, marginBottom:70}}>
                 <TouchableOpacity onPress={toggleModal}>
-                    <Text style={{color:'white',marginLeft:50, fontSize:20, backgroundColor:'rgba(120,184,192,1)', padding:10, paddingLeft:20, paddingRight:20, borderRadius:10}}>Mégse</Text>
+                    <Text style={{color:'white',marginLeft:10, fontSize:20, backgroundColor:'rgba(120,184,192,1)', padding:10, paddingLeft:20, paddingRight:20, borderRadius:10}}>Mégse</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={toggleModal}>
-                    <Text style={{color:'white', marginRight:50, fontSize:20, backgroundColor:'rgba(120,184,192,1)', padding:10, paddingLeft:20, paddingRight:20, borderRadius:10}}>Hozzáadás</Text>
+                    <Text style={{color:'white', marginRight:10, fontSize:20, backgroundColor:'rgba(120,184,192,1)', padding:10, paddingLeft:20, paddingRight:20, borderRadius:10}}>Hozzáadás</Text>
                 </TouchableOpacity>
             </View>
           </View>
