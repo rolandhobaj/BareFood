@@ -4,6 +4,7 @@ import { FlatList, View, Text } from 'react-native';
 import FoodCard from './FoodCard'
 import RecipeService from '../Service/RecipeService'
 import useStore from '../Model/Store'
+import Recipe from '../Model/Recipe';
 
 
 function removeSpecialCharacters(text) {
@@ -40,6 +41,7 @@ function filter(data, tag){
 }
 
 function getMappedRecipes(tag){
+    RecipeService.writeRecipes();
     let Data = RecipeService.getAllRecipe().sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase());
     if (tag !== ''){
        Data =  filter(Data, tag);
