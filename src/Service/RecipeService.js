@@ -18,27 +18,17 @@ const db = getFirestore(app);
 
 export default class RecipeService{
 
-    static async writeRecipes(){
+    /*static async writeRecipes(){
         const querySnapshot = await getDocs(collection(db, "recipes"));
         querySnapshot.forEach((doc) => {
             let recipe = new Recipe(doc.data().name, doc.data().tags.split(',').map(x => x.trim()), doc.data().imageName)
             console.log(recipe);
          });
-    }
+    }*/
 
     static getAllRecipe(){
         return [
-            new Recipe("Alma", ["Köret"]),
-            new Recipe("Sör", ["Főétel", "Desszert"]),
-            new Recipe("Sushi", ["Főétel"]),
-            new Recipe("Tárkonyos leves", ["Leves"]),
-            new Recipe("Kivájt Pityi", ["Főétel"]),
-            new Recipe("Töltött káposzta", ["Főétel"]),
-            new Recipe("Húsimádó pizza", ["Főétel"]),
-            new Recipe("Rizs", ["Köret"]),
-            new Recipe("Pityi", ["Köret"]),
-            new Recipe("Somlói", ["Köret"]),
-            new Recipe("Fagyi", ["Desszert"]),
+            new Recipe("Alma", ["Köret"])
             ];
     }
 }

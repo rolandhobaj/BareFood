@@ -41,7 +41,7 @@ function filter(data, tag){
 }
 
 function getMappedRecipes(tag){
-    RecipeService.writeRecipes();
+    //RecipeService.writeRecipes();
     let Data = RecipeService.getAllRecipe().sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase());
     if (tag !== ''){
        Data =  filter(Data, tag);
