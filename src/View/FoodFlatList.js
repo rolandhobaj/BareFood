@@ -73,7 +73,7 @@ export default function FoodFlatList() {
                 data={getMappedRecipes(searchedTag)}
                 renderItem={({ item }) =>
                     <View style={{ flexDirection: 'row' }}>
-                        <FoodCard style={{flex:2}} name={item.firstKey}/>
+                        <FoodCard style={{flex:2}} name={item.firstKey} imageUrl="pityi.jpg"/>
                         {item.secondKey!= null ? <FoodCard name={item.secondKey}/>: <View style={{width:'50%'}}/> }
                     </View>
                 }
