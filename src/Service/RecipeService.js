@@ -22,13 +22,19 @@ export default class RecipeService{
         return recipeList;
     }
 
-    static getImageUrl(name, whenDone){
-        getDownloadURL(ref(storage, name))
+    static async getImageUrl(name){
+        if (name == undefined){
+            return '';
+        }
+
+        let downloadedUrl = '';
+        await getDownloadURL(ref(storage, name))
         .then((url) => {
-            whenDone(url);
+            downloadedUrl = url;
         })
         .catch((error) => {
         console.log(error);
         });
+        return downloadedUrl;
     }
 }

@@ -4,15 +4,9 @@ import { useState, useEffect } from 'react';
 import RecipeService from '../Service/RecipeService'
 
 export default function FoodCard(props){
-  const [imageUrl, setImageUrl] = useState(undefined);
-
-  useEffect(() => {
-    RecipeService.getImageUrl(props.imageName, url => setImageUrl(url)); 
-  }, []);
-
   return (
       <View style={styles.container}>
-        <Image source={{uri: imageUrl}} style={styles.image} />
+        {props.imageName != '' ? <Image source={{uri: props.imageName}} style={styles.image} /> : null}
         <Text style={styles.text}>
           {props.name}
         </Text>

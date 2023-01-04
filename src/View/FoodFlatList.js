@@ -4,6 +4,7 @@ import { FlatList, View, Text } from 'react-native';
 import FoodCard from './FoodCard'
 import RecipeService from '../Service/RecipeService'
 import useStore from '../Model/Store'
+import { async } from '@firebase/util';
 
 
 function removeSpecialCharacters(text) {
@@ -39,16 +40,36 @@ function filter(data, tag){
     });
 }
 
-async function getMappedRecipes(tag, whenDone){
-    let Data = (await RecipeService.getAllRecipe()).sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase());
+async function downloadList(whenDone, whenDoneUrl){
+    let data = (await RecipeService.getAllRecipe()).sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase());
+    whenDone(data);
+    let imageUrls = []
+    for (let i = 0; i < data.length; i++) {
+        let url = await RecipeService.getImageUrl(data[i].imageName);
+        imageUrls.push({
+            imageName: data[i].imageName,
+            imageUrl: url
+        });
+      }
+
+    whenDoneUrl(imageUrls);
+
+    return imageUrls;
+}
+
+function getMappedRecipes(data, tag){
+    if (data.length == 0){
+        return [];
+    }
+
     if (tag !== ''){
-       Data =  filter(Data, tag);
+       data =  filter(data, tag);
     }
 
     const chunkSize = 2;
     let recipes = [];
-    for (let i = 0; i < Data.length; i += chunkSize) {
-        const chunk = Data.slice(i, i + chunkSize);
+    for (let i = 0; i < data.length; i += chunkSize) {
+        const chunk = data.slice(i, i + chunkSize);
         if (chunk.length >= 2){
             recipes.push({
                 firstKey:{name: chunk[0].name, imageName: chunk[0].imageName},
@@ -62,26 +83,36 @@ async function getMappedRecipes(tag, whenDone){
         }
     }
 
-    whenDone(recipes);
+    return recipes;
 };
 
+function getImageUrl(imageName, imageUrls){
+    if (imageUrls.length == 0){
+        return "";
+    }
+
+    var list = imageUrls.filter(x => x.imageName == imageName);
+    return list[0].imageUrl;
+}
+
 export default function FoodFlatList() {
-        const [recipes, setRecipe] = useState(0);
-        const [downloaded, setDownloaded] = useState(0);
+        const [recipes, setRecipe] = useState([]);
+        const [imageUrls, setImageUrls] = useState([]);
+        const [downloaded, setDownloaded] = useState(false);
         const searchedTag = useStore((state) => state.searchedTag)
 
         if (!downloaded){
-            getMappedRecipes(searchedTag, setRecipe);
+            downloadList(setRecipe, setImageUrls);
             setDownloaded(true);
         }
-
+        
         return (
             <FlatList
-                data={recipes}
+                data={getMappedRecipes(recipes, searchedTag)}
                 renderItem={({ item }) =>
                     <View style={{ flexDirection: 'row' }}>
-                        <FoodCard style={{flex:2}} name={item.firstKey.name} imageName={item.firstKey.imageName}/>
-                        {item.secondKey!= null ? <FoodCard name={item.secondKey.name} imageName={item.secondKey.imageName}/>: <View style={{width:'50%'}}/> }
+                        <FoodCard style={{flex:2}} name={item.firstKey.name} imageName={getImageUrl(item.firstKey.imageName, imageUrls)}/>
+                        {item.secondKey!= null ? <FoodCard name={item.secondKey.name} imageName={getImageUrl(item.secondKey.imageName, imageUrls)}/>: <View style={{width:'50%'}}/> }
                     </View>
                 }
           />
