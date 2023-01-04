@@ -11,18 +11,15 @@ const storage = getStorage(app);
 
 export default class RecipeService{
 
-    /*static async writeRecipes(){
+    static async getAllRecipe(){
+        let recipeList =[];
         const querySnapshot = await getDocs(collection(db, "recipes"));
         querySnapshot.forEach((doc) => {
             let recipe = new Recipe(doc.data().name, doc.data().tags.split(',').map(x => x.trim()), doc.data().imageName)
-            console.log(recipe);
+            recipeList.push(recipe);
          });
-    }*/
 
-    static getAllRecipe(){
-        return [
-            new Recipe("Alma", ["Köret"])
-            ];
+        return recipeList;
     }
 
     static getImageUrl(name, whenDone){

@@ -7,7 +7,8 @@ export default function FoodCard(props){
   const [imageUrl, setImageUrl] = useState(undefined);
 
   useEffect(() => {
-    RecipeService.getImageUrl(props.imageUrl, url => setImageUrl(url)); }, []);
+    RecipeService.getImageUrl(props.imageName, url => setImageUrl(url)); 
+  }, []);
 
   return (
       <View style={styles.container}>

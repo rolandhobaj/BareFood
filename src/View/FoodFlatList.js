@@ -1,10 +1,9 @@
-import { React, Component } from 'react'
+import { React, useState } from 'react'
 import { FlatList, View, Text } from 'react-native';
 
 import FoodCard from './FoodCard'
 import RecipeService from '../Service/RecipeService'
 import useStore from '../Model/Store'
-import Recipe from '../Model/Recipe';
 
 
 function removeSpecialCharacters(text) {
@@ -40,9 +39,8 @@ function filter(data, tag){
     });
 }
 
-function getMappedRecipes(tag){
-    //RecipeService.writeRecipes();
-    let Data = RecipeService.getAllRecipe().sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase());
+async function getMappedRecipes(tag, whenDone){
+    let Data = (await RecipeService.getAllRecipe()).sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase());
     if (tag !== ''){
        Data =  filter(Data, tag);
     }
@@ -53,28 +51,37 @@ function getMappedRecipes(tag){
         const chunk = Data.slice(i, i + chunkSize);
         if (chunk.length >= 2){
             recipes.push({
-                firstKey:chunk[0].name,
-                secondKey:chunk[1].name
+                firstKey:{name: chunk[0].name, imageName: chunk[0].imageName},
+                secondKey:{name: chunk[1].name, imageName: chunk[1].imageName}
             })
         } else {
             recipes.push({
-                firstKey:chunk[0].name,
+                firstKey:{name: chunk[0].name, imageName: chunk[0].imageName},
                 secondKey:null
             })
         }
     }
-    return recipes;
+
+    whenDone(recipes);
 };
 
 export default function FoodFlatList() {
+        const [recipes, setRecipe] = useState(0);
+        const [downloaded, setDownloaded] = useState(0);
         const searchedTag = useStore((state) => state.searchedTag)
+
+        if (!downloaded){
+            getMappedRecipes(searchedTag, setRecipe);
+            setDownloaded(true);
+        }
+
         return (
             <FlatList
-                data={getMappedRecipes(searchedTag)}
+                data={recipes}
                 renderItem={({ item }) =>
                     <View style={{ flexDirection: 'row' }}>
-                        <FoodCard style={{flex:2}} name={item.firstKey} imageUrl="pityi.jpg"/>
-                        {item.secondKey!= null ? <FoodCard name={item.secondKey}/>: <View style={{width:'50%'}}/> }
+                        <FoodCard style={{flex:2}} name={item.firstKey.name} imageName={item.firstKey.imageName}/>
+                        {item.secondKey!= null ? <FoodCard name={item.secondKey.name} imageName={item.secondKey.imageName}/>: <View style={{width:'50%'}}/> }
                     </View>
                 }
           />
