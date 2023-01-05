@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { TouchableOpacity, StyleSheet, View, Text, Button, TextInput, Image } from 'react-native';
 import Modal from "react-native-modal";
 import { Icon } from '@rneui/themed';
+import Recipe from '../Model/Recipe'
+import RecipeService from '../Service/RecipeService'
 
 import * as ImagePicker from 'expo-image-picker';
 
@@ -9,10 +11,27 @@ import * as ImagePicker from 'expo-image-picker';
 export default function NewRecipeModal(){
     const [isModalVisible, setModalVisible] = useState(false);
     const [image, setImage] = useState(null);
+    const [name, setName] = useState("");
+    const [tags, setTags] = useState("");
+    const [imageName, setImageName] = useState("");
 
     const toggleModal = async () => {
       setModalVisible(!isModalVisible);
+      if (!isModalVisible){
+        setName("");
+        setTags("");
+        setImageName("");
+      }
      };
+
+    const saveImage = async() => {
+      if (name == "" || tags =="" || imageName == ""){
+        return
+      }
+
+      toggleModal();
+      RecipeService.addRecipe(new Recipe(name, tags, imageName))
+    }
 
      const pickImage = async () => {
        let result = await ImagePicker.launchImageLibraryAsync({
@@ -23,6 +42,9 @@ export default function NewRecipeModal(){
        });
    
        if (!result.canceled) {
+         let fullUri = result.assets[0].uri;
+         let splitBySlash = fullUri.split('/');
+         setImageName(splitBySlash[splitBySlash.length - 1]);
          setImage(result.assets[0].uri);
        }
      };
@@ -45,12 +67,12 @@ export default function NewRecipeModal(){
   
             <View style={{flexDirection:'row', margin:10}}>
                 <Text style={{color:'white', fontSize:17, padding:2, marginRight:10}}>Név:</Text>
-                <TextInput placeholder="Írj ide.." width='78%' backgroundColor='white' style={{paddingLeft:10, fontSize:17}}/>
+                <TextInput placeholder="Írj ide.." width='78%' onChangeText={setName} backgroundColor='white' style={{paddingLeft:10, fontSize:17}}/>
             </View>
             
             <View style={{flexDirection:'row', margin:10}}>
                 <Text style={{color:'white', fontSize:17, padding:2, marginRight:10}}>Cimkék:</Text>
-                <TextInput placeholder="Vesszővel elválasztva.." width='69%' backgroundColor='white' style={{paddingLeft:10, fontSize:17}}/>
+                <TextInput placeholder="Vesszővel elválasztva.." width='69%' onChangeText={setTags} backgroundColor='white' style={{paddingLeft:10, fontSize:17}}/>
             </View>
 
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -61,10 +83,10 @@ export default function NewRecipeModal(){
             </View>
 
             <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15, marginBottom:70}}>
-                <TouchableOpacity onPress={toggleModal}>
+                <TouchableOpacity onPress={x =>toggleModal}>
                     <Text style={{color:'white',marginLeft:10, fontSize:20, backgroundColor:'rgba(120,184,192,1)', padding:10, paddingLeft:20, paddingRight:20, borderRadius:10}}>Mégse</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={toggleModal}>
+                <TouchableOpacity onPress={saveImage}>
                     <Text style={{color:'white', marginRight:10, fontSize:20, backgroundColor:'rgba(120,184,192,1)', padding:10, paddingLeft:20, paddingRight:20, borderRadius:10}}>Hozzáadás</Text>
                 </TouchableOpacity>
             </View>

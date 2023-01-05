@@ -4,12 +4,21 @@ import app from '../Service/FirebaseApp'
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { collection, getDocs } from "firebase/firestore"; 
+import { collection, getDocs, setDoc, doc } from "firebase/firestore"; 
 
 const db = getFirestore(app);
 const storage = getStorage(app);
 
 export default class RecipeService{
+
+    static async addRecipe(recipe){
+        console.log(recipe);
+        await setDoc(doc(db, "recipes", recipe.name), {
+            name: recipe.name,
+            tags: recipe.tags,
+            imageName: recipe.imageName
+          });
+    }
 
     static async getAllRecipe(){
         let recipeList =[];
