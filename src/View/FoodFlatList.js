@@ -92,18 +92,22 @@ function getImageUrl(imageName, imageUrls){
     }
 
     var list = imageUrls.filter(x => x.imageName == imageName);
+    if (list.length == 0){
+        return "";
+    }
     return list[0].imageUrl;
 }
 
 export default function FoodFlatList() {
         const [recipes, setRecipe] = useState([]);
         const [imageUrls, setImageUrls] = useState([]);
-        const [downloaded, setDownloaded] = useState(false);
         const searchedTag = useStore((state) => state.searchedTag)
+        const needRefresh = useStore((state) => state.needRefresh)
+        const modifyNeedRefresh = useStore((state) => state.modifyNeedRefresh)
 
-        if (!downloaded){
+        if (needRefresh){
             downloadList(setRecipe, setImageUrls);
-            setDownloaded(true);
+            modifyNeedRefresh(false);
         }
         
         return (

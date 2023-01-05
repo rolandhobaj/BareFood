@@ -4,6 +4,7 @@ import Modal from "react-native-modal";
 import { Icon } from '@rneui/themed';
 import Recipe from '../Model/Recipe'
 import RecipeService from '../Service/RecipeService'
+import useStore from '../Model/Store'
 
 import * as ImagePicker from 'expo-image-picker';
 
@@ -14,6 +15,7 @@ export default function NewRecipeModal(){
     const [name, setName] = useState("");
     const [tags, setTags] = useState("");
     const [imageName, setImageName] = useState("");
+    const modifyNeedRefresh = useStore(s => s.modifyNeedRefresh);
 
     const toggleModal = async () => {
       setModalVisible(!isModalVisible);
@@ -30,17 +32,17 @@ export default function NewRecipeModal(){
       }
 
       toggleModal();
-      RecipeService.addRecipe(new Recipe(name, tags, imageName))
+      RecipeService.addRecipe(new Recipe(name, tags, imageName), image, modifyNeedRefresh)
     }
 
      const pickImage = async () => {
        let result = await ImagePicker.launchImageLibraryAsync({
          mediaTypes: ImagePicker.MediaTypeOptions.All,
          allowsEditing: true,
-         aspect: [4, 3],
-         quality: 1,
+         aspect: [4, 4],
+         quality: 0.3,
        });
-   
+
        if (!result.canceled) {
          let fullUri = result.assets[0].uri;
          let splitBySlash = fullUri.split('/');
