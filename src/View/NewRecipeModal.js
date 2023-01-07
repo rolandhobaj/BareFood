@@ -63,33 +63,36 @@ export default function NewRecipeModal(){
             isVisible={isModalVisible} 
             backdropOpacity={0.90}
             backdropTransitionOutTiming={0}
-            style={{alignItems:'center', flex:1}}>
+            style={{flex:1}}>
           <View style={{ flex: 1 }}>
             <Text style={{color:'white', margin:50, fontSize:25}}>Új recept hozzáadása</Text>
   
             <View style={{flexDirection:'row', margin:10}}>
-                <Text style={{color:'white', fontSize:17, padding:2, marginRight:10}}>Név:</Text>
-                <TextInput placeholder="Írj ide.." width='78%' onChangeText={setName} backgroundColor='white' style={{paddingLeft:10, fontSize:17}}/>
+                <Text style={{color:'white', fontSize:17, padding:3, marginRight:10}}>Név:</Text>
+                <TextInput placeholder="Írj ide.,." width='78%' onChangeText={setName} backgroundColor='white' style={{paddingLeft:10, fontSize:17}}/>
             </View>
             
             <View style={{flexDirection:'row', margin:10}}>
-                <Text style={{color:'white', fontSize:17, padding:2, marginRight:10}}>Cimkék:</Text>
-                <TextInput placeholder="Vesszővel elválasztva.." width='69%' onChangeText={setTags} backgroundColor='white' style={{paddingLeft:10, fontSize:17}}/>
+                <Text style={{color:'white', fontSize:17, padding:4, marginRight:10}}>Címkék:</Text>
+                <TextInput placeholder="Vesszővel elválasztva..." width='69%' onChangeText={setTags} backgroundColor='white' style={{paddingLeft:10, fontSize:17}}/>
             </View>
 
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              {image && <Image source={{ uri: image }} style={{ width: 200, height: 200, margin: 20 }} />}
+            <View style={{ flex: 1, marginTop:20, alignItems:'center'}}>
               <TouchableOpacity onPress={pickImage}>
-                    <Text style={{color:'white', fontSize:20, backgroundColor:'rgba(120,184,192,1)', padding:10, paddingLeft:20, paddingRight:20, borderRadius:10}}>Válassz képet..</Text>
+                  <View style={{flexDirection:'row', borderWidth:1, borderColor:'white', padding:5}}>
+                    <Icon name='image' color='white' size={30} containerStyle={{marginRight:10}}/>
+                    <Text style={{color:'white', fontSize:20}}>Válassz képet a galériából</Text>
+                  </View>
               </TouchableOpacity>
+              {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
             </View>
 
             <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15, marginBottom:70}}>
                 <TouchableOpacity onPress={x =>toggleModal}>
-                    <Text style={{color:'white',marginLeft:10, fontSize:20, backgroundColor:'rgba(120,184,192,1)', padding:10, paddingLeft:20, paddingRight:20, borderRadius:10}}>Mégse</Text>
+                  <Icon name='close' color='grey' size={70} containerStyle={{marginLeft:20}}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={saveImage}>
-                    <Text style={{color:'white', marginRight:10, fontSize:20, backgroundColor:'rgba(120,184,192,1)', padding:10, paddingLeft:20, paddingRight:20, borderRadius:10}}>Hozzáadás</Text>
+                  <Icon name='done' color='green' size={70} containerStyle={{marginRight:20}}/>
                 </TouchableOpacity>
             </View>
           </View>
