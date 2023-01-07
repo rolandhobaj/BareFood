@@ -8,7 +8,7 @@ export default function FoodCard(props){
 
   return (
       <TouchableOpacity style={styles.container} onPress={_ => setIsMenuVisible(false)} onLongPress={_ => setIsMenuVisible(true)}>
-        {isMenuVisible ?<View>
+        {isMenuVisible ?<View style={{zIndex:88}}>
           <Text style={{textAlign: 'center',
            color:'white', backgroundColor:'rgba(18,57,6,0.6)', borderRadius:5, 
            padding:7, marginLeft:'50%', fontSize:15,
@@ -17,7 +17,7 @@ export default function FoodCard(props){
           backgroundColor:'rgba(18,57,6,0.6)', borderRadius:5, padding:7, marginLeft:'50%',
            fontSize:15, marginBottom:3}}>Töröl</Text>
         </View> : null}
-      <View>
+      <View style={{backgroundColor: 'rgba(18,57,6,0.35)', borderRadius:10, padding:10}}>
         {props.imageName != '' ? <Image source={{uri: props.imageName}} style={styles.image} /> : null}
         <Text style={styles.text}>
           {props.name}
@@ -29,7 +29,6 @@ export default function FoodCard(props){
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(18,57,6,0.35)',
     flex: 1,
     textAlignVertical: 'center',
     borderRadius:40,
