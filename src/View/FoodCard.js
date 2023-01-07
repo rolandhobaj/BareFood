@@ -9,13 +9,17 @@ export default function FoodCard(props){
   return (
       <TouchableOpacity style={styles.container} onPress={_ => setIsMenuVisible(false)} onLongPress={_ => setIsMenuVisible(true)}>
         {isMenuVisible ?<View style={{zIndex:88}}>
+        <TouchableOpacity onPress={_ => setIsMenuVisible(false)}>
           <Text style={{textAlign: 'center',
            color:'white', backgroundColor:'rgba(18,57,6,0.6)', borderRadius:5, 
            padding:7, marginLeft:'50%', fontSize:15,
            marginBottom:3}}>Módosít</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={_ => setIsMenuVisible(false)}>
           <Text style={{textAlign: 'center', color:'white', 
           backgroundColor:'rgba(18,57,6,0.6)', borderRadius:5, padding:7, marginLeft:'50%',
            fontSize:15, marginBottom:3}}>Töröl</Text>
+           </TouchableOpacity>
         </View> : null}
       <View style={{backgroundColor: 'rgba(18,57,6,0.35)', borderRadius:10, padding:10}}>
         {props.imageName != '' ? <Image source={{uri: props.imageName}} style={styles.image} /> : null}
