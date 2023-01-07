@@ -2,9 +2,12 @@ import { Text, Image, View, TouchableOpacity } from 'react-native';
 import { StyleSheet} from 'react-native';
 import RecipeService from '../Service/RecipeService'
 import React, { useState } from 'react';
+import useStore from '../Model/Store'
+
 
 export default function FoodCard(props){
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const modifyNeedRefresh = useStore((state) => state.modifyNeedRefresh)
 
   return (
       <TouchableOpacity style={styles.container} onPress={_ => setIsMenuVisible(false)} onLongPress={_ => setIsMenuVisible(true)}>
@@ -15,7 +18,7 @@ export default function FoodCard(props){
            padding:7, marginLeft:'50%', fontSize:15,
            marginBottom:3}}>Módosít</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={_ => setIsMenuVisible(false)}>
+        <TouchableOpacity onPress={_ => {setIsMenuVisible(false); RecipeService.deleteItem(props.name, modifyNeedRefresh);}}>
           <Text style={{textAlign: 'center', color:'white', 
           backgroundColor:'rgba(18,57,6,0.6)', borderRadius:5, padding:7, marginLeft:'50%',
            fontSize:15, marginBottom:3}}>Töröl</Text>

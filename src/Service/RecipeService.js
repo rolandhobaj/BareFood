@@ -4,8 +4,8 @@ import * as FileSystem from 'expo-file-system';
 
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import { collection, getDocs, setDoc, doc } from "firebase/firestore"; 
+import { getStorage, ref, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
+import { collection, getDocs, setDoc, doc, deleteDoc } from "firebase/firestore"; 
 
 const db = getFirestore(app);
 const storage = getStorage(app);
@@ -44,11 +44,29 @@ export default class RecipeService{
         })
       }
 
+    static async deleteItem(recipeName, whenDone){
+        let allRecipes = await this.getAllRecipe();
+        if (allRecipes.length == 1){
+            return;
+        }
+        var selectedIdList = allRecipes.filter(x => x.name == recipeName);
+        if (selectedIdList.length == 0){
+            return;
+        }
+
+        var selectedRecipe = selectedIdList[0];
+        await deleteDoc(doc(db, "recipes", selectedRecipe.id));
+
+        const desertRef = ref(storage, selectedRecipe.imageName);
+        await deleteObject(desertRef)
+        whenDone(true)
+    }
+
     static async getAllRecipe(){
         let recipeList =[];
         const querySnapshot = await getDocs(collection(db, "recipes"));
         querySnapshot.forEach((doc) => {
-            let recipe = new Recipe(doc.data().name, doc.data().tags.split(',').map(x => x.trim()), doc.data().imageName)
+            let recipe = new Recipe(doc.id, doc.data().name, doc.data().tags.split(',').map(x => x.trim()), doc.data().imageName)
             recipeList.push(recipe);
          });
 

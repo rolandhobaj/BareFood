@@ -62,7 +62,7 @@ export default function NewRecipeModal(){
       }
 
       toggleModal();
-      RecipeService.addRecipe(new Recipe(name, tags, imageName), image, modifyNeedRefresh)
+      RecipeService.addRecipe(new Recipe(name, name, tags, imageName), image, modifyNeedRefresh)
     }
 
      const pickImage = async () => {
@@ -116,7 +116,7 @@ export default function NewRecipeModal(){
                     <Text style={{color:'white', fontSize:20}}>Válassz képet a galériából</Text>
                   </View>
               </TouchableOpacity>
-              {image && !isKeyboardVisible && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+              {image && !isKeyboardVisible && <Image source={{ uri: image }} style={{ width: 200, height: 200, marginTop:10 }} />}
             </View>
 
             <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15, marginBottom:50}}>
