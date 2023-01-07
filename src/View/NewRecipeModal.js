@@ -19,6 +19,7 @@ export default function NewRecipeModal(){
 
     const toggleModal = async () => {
       setModalVisible(!isModalVisible);
+      console.log(isModalVisible);
       if (!isModalVisible){
         setName("");
         setTags("");
@@ -88,7 +89,7 @@ export default function NewRecipeModal(){
             </View>
 
             <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15, marginBottom:70}}>
-                <TouchableOpacity onPress={x =>toggleModal}>
+                <TouchableOpacity onPress={toggleModal}>
                   <Icon name='close' color='grey' size={70} containerStyle={{marginLeft:20}}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={saveImage}>
