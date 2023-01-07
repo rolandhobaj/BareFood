@@ -1,16 +1,29 @@
-import { Text, Image, View } from 'react-native';
+import { Text, Image, View, TouchableOpacity } from 'react-native';
 import { StyleSheet} from 'react-native';
-import { useState, useEffect } from 'react';
 import RecipeService from '../Service/RecipeService'
+import React, { useState } from 'react';
 
 export default function FoodCard(props){
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+
   return (
-      <View style={styles.container}>
+      <TouchableOpacity style={styles.container} onPress={_ => setIsMenuVisible(false)} onLongPress={_ => setIsMenuVisible(true)}>
+        {isMenuVisible ?<View>
+          <Text style={{textAlign: 'center',
+           color:'white', backgroundColor:'rgba(18,57,6,0.6)', borderRadius:5, 
+           padding:7, marginLeft:'50%', fontSize:15,
+           marginBottom:3}}>Módosít</Text>
+          <Text style={{textAlign: 'center', color:'white', 
+          backgroundColor:'rgba(18,57,6,0.6)', borderRadius:5, padding:7, marginLeft:'50%',
+           fontSize:15, marginBottom:3}}>Töröl</Text>
+        </View> : null}
+      <View>
         {props.imageName != '' ? <Image source={{uri: props.imageName}} style={styles.image} /> : null}
         <Text style={styles.text}>
           {props.name}
         </Text>
       </View>
+      </TouchableOpacity>
     )
 }
 
