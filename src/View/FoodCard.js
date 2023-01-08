@@ -11,16 +11,16 @@ export default function FoodCard(props){
 
   return (
       <TouchableOpacity style={styles.container} onPress={_ => setIsMenuVisible(false)} onLongPress={_ => setIsMenuVisible(true)}>
-        {isMenuVisible ?<View style={{zIndex:88}}>
+        {isMenuVisible ?<View style={{zIndex:88, marginBottom: -75}}>
         <TouchableOpacity onPress={_ => setIsMenuVisible(false)}>
           <Text style={{textAlign: 'center',
            color:'white', backgroundColor:'rgba(18,57,6,0.6)', borderRadius:5, 
-           padding:7, marginLeft:'50%', fontSize:15,
-           marginBottom:3}}>Módosít</Text>
+           padding:7, marginLeft:'40%', fontSize:15,
+           marginBottom:3}}>Módosítás</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={_ => {setIsMenuVisible(false); RecipeService.deleteItem(props.name, modifyNeedRefresh);}}>
           <Text style={{textAlign: 'center', color:'white', 
-          backgroundColor:'rgba(18,57,6,0.6)', borderRadius:5, padding:7, marginLeft:'50%',
+          backgroundColor:'rgba(18,57,6,0.6)', borderRadius:5, padding:7, marginLeft:'40%',
            fontSize:15, marginBottom:3}}>Töröl</Text>
            </TouchableOpacity>
         </View> : null}
