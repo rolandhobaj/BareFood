@@ -9,7 +9,7 @@ import useStore from '../Model/Store'
 import * as ImagePicker from 'expo-image-picker';
 
 
-export default function NewRecipeModal(){
+export default function NewRecipeButton(){
     const [isModalVisible, setModalVisible] = useState(false);
     const [image, setImage] = useState(null);
     const [name, setName] = useState("");

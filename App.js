@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, ImageBackground } from 'react-native';
 import FoodSearchBar from './src/View/FoodSearchBar'
 import FoodFlatList from './src/View/FoodFlatList'
-import NewRecipeModal from './src/View/NewRecipeModal'
+import NewRecipeButton from './src/View/NewRecipeButton'
 
 
 const FoodBear = () => {
@@ -11,7 +11,7 @@ const FoodBear = () => {
       <ImageBackground source={require('./images/bg.png')} resizeMode="cover" style={styles.image}>
       <FoodSearchBar/>
       <FoodFlatList/>
-      <NewRecipeModal/>
+      <NewRecipeButton/>
       </ImageBackground>
     </View>
   );
