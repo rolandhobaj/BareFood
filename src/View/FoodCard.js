@@ -8,11 +8,12 @@ import useStore from '../Model/Store'
 export default function FoodCard(props){
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const modifyNeedRefresh = useStore((state) => state.modifyNeedRefresh)
+  const modifyRecipeModalVisible = useStore((state) => state.modifyRecipeModalVisible)
 
   return (
       <TouchableOpacity style={styles.container} onPress={_ => setIsMenuVisible(false)} onLongPress={_ => setIsMenuVisible(true)}>
         {isMenuVisible ?<View style={{zIndex:88, marginBottom: -75}}>
-        <TouchableOpacity onPress={_ => setIsMenuVisible(false)}>
+        <TouchableOpacity onPress={_ => {setIsMenuVisible(false); modifyRecipeModalVisible(true);}}>
           <Text style={{textAlign: 'center',
            color:'white', backgroundColor:'rgba(18,90,6,1)', borderRadius:5, 
            padding:7, marginLeft:'40%', fontSize:15,
