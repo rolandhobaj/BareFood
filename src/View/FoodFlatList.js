@@ -72,12 +72,12 @@ function getMappedRecipes(data, tag){
         const chunk = data.slice(i, i + chunkSize);
         if (chunk.length >= 2){
             recipes.push({
-                firstKey:{name: chunk[0].name, imageName: chunk[0].imageName},
-                secondKey:{name: chunk[1].name, imageName: chunk[1].imageName}
+                firstKey:{name: chunk[0].name, imageName: chunk[0].imageName, tags:chunk[0].tags},
+                secondKey:{name: chunk[1].name, imageName: chunk[1].imageName, tags:chunk[1].tags}
             })
         } else {
             recipes.push({
-                firstKey:{name: chunk[0].name, imageName: chunk[0].imageName},
+                firstKey:{name: chunk[0].name, imageName: chunk[0].imageName, tags:chunk[0].tags},
                 secondKey:null
             })
         }
@@ -115,8 +115,8 @@ export default function FoodFlatList() {
                 data={getMappedRecipes(recipes, searchedTag)}
                 renderItem={({ item }) =>
                     <View style={{ flexDirection: 'row' }}>
-                        <FoodCard style={{flex:2}} name={item.firstKey.name} imageName={getImageUrl(item.firstKey.imageName, imageUrls)}/>
-                        {item.secondKey!= null ? <FoodCard name={item.secondKey.name} imageName={getImageUrl(item.secondKey.imageName, imageUrls)}/>: <View style={{width:'50%'}}/> }
+                        <FoodCard style={{flex:2}} tags={item.firstKey.tags} name={item.firstKey.name} imageName={getImageUrl(item.firstKey.imageName, imageUrls)}/>
+                        {item.secondKey!= null ? <FoodCard name={item.secondKey.name} tags={item.firstKey.tags} imageName={getImageUrl(item.secondKey.imageName, imageUrls)}/>: <View style={{width:'50%'}}/> }
                     </View>
                 }
           />

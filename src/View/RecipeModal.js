@@ -10,7 +10,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { FAB } from 'react-native-elements';
 
 
-export default function NewRecipeButton(){
+export default function RecipeModal(){
     const [isModalVisible, setModalVisible] = useState(false);
     const [image, setImage] = useState(null);
     const [name, setName] = useState("");
