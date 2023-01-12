@@ -4,11 +4,27 @@ import RecipeService from '../Service/RecipeService'
 import React, { useState } from 'react';
 import useStore from '../Model/Store'
 
+async function getImageUrl(imageName, whenDone){
+  var result = await RecipeService.getImageUrl(imageName);
+  if (result == ""){
+    whenDone("Not Found");
+    return;
+  }
+
+  whenDone(result);
+}
+
 
 export default function FoodCard(props){
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
   const modifyNeedRefresh = useStore((state) => state.modifyNeedRefresh)
   const modifyRecipeModalVisible = useStore((state) => state.modifyRecipeModalVisible)
+
+  if (imageUrl == ""){
+    getImageUrl(props.imageName, setImageUrl);
+    return;
+  }
 
   return (
       <TouchableOpacity style={styles.container} onPress={_ => setIsMenuVisible(false)} onLongPress={_ => setIsMenuVisible(true)}>
@@ -26,7 +42,7 @@ export default function FoodCard(props){
            </TouchableOpacity>
         </View> : null}
       <View style={{backgroundColor: 'rgba(18,57,6,0.35)', borderRadius:10, padding:10}}>
-        {props.imageName != '' ? <Image source={{uri: props.imageName}} style={styles.image} /> : null}
+        {imageUrl != '' && imageUrl != "Not Found" ? <Image source={{uri: imageUrl}} style={styles.image} /> : null}
         <Text style={styles.text}>
           {props.name}
         </Text>

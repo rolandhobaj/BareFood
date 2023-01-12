@@ -1,5 +1,5 @@
 import { React, useState } from 'react'
-import { FlatList, View, Text } from 'react-native';
+import { FlatList, View, Text, ScrollView } from 'react-native';
 
 import FoodCard from './FoodCard'
 import RecipeService from '../Service/RecipeService'
@@ -40,21 +40,9 @@ function filter(data, tag){
     });
 }
 
-async function downloadList(whenDone, whenDoneUrl){
+async function downloadList(whenDone){
     let data = (await RecipeService.getAllRecipe()).sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase());
     whenDone(data);
-    let imageUrls = []
-    for (let i = 0; i < data.length; i++) {
-        let url = await RecipeService.getImageUrl(data[i].imageName);
-        imageUrls.push({
-            imageName: data[i].imageName,
-            imageUrl: url
-        });
-      }
-
-    whenDoneUrl(imageUrls);
-
-    return imageUrls;
 }
 
 function getMappedRecipes(data, tag){
@@ -86,39 +74,32 @@ function getMappedRecipes(data, tag){
     return recipes;
 };
 
-function getImageUrl(imageName, imageUrls){
-    if (imageUrls.length == 0){
-        return "";
-    }
-
-    var list = imageUrls.filter(x => x.imageName == imageName);
-    if (list.length == 0){
-        return "";
-    }
-    return list[0].imageUrl;
-}
-
 export default function FoodFlatList() {
         const [recipes, setRecipe] = useState([]);
-        const [imageUrls, setImageUrls] = useState([]);
         const searchedTag = useStore((state) => state.searchedTag)
         const needRefresh = useStore((state) => state.needRefresh)
         const modifyNeedRefresh = useStore((state) => state.modifyNeedRefresh)
 
         if (needRefresh){
-            downloadList(setRecipe, setImageUrls);
+            downloadList(setRecipe);
             modifyNeedRefresh(false);
         }
         
+        var recipeViewlist = []
+        var mappedRecipes = getMappedRecipes(recipes, searchedTag);
+        for (let i = 0; i< mappedRecipes.length; ++i){
+            let item = mappedRecipes[i];
+            recipeViewlist.push( 
+                <View key={i} style={{ flexDirection: 'row' }}>
+                    <FoodCard style={{flex:2}} tags={item.firstKey.tags} name={item.firstKey.name} imageName={item.firstKey.imageName}/>
+                    {item.secondKey!= null ? <FoodCard name={item.secondKey.name} tags={item.firstKey.tags} imageName={item.secondKey.imageName}/>: <View style={{width:'50%'}}/> }
+                </View>
+                )
+        }
+
         return (
-            <FlatList
-                data={getMappedRecipes(recipes, searchedTag)}
-                renderItem={({ item }) =>
-                    <View style={{ flexDirection: 'row' }}>
-                        <FoodCard style={{flex:2}} tags={item.firstKey.tags} name={item.firstKey.name} imageName={getImageUrl(item.firstKey.imageName, imageUrls)}/>
-                        {item.secondKey!= null ? <FoodCard name={item.secondKey.name} tags={item.firstKey.tags} imageName={getImageUrl(item.secondKey.imageName, imageUrls)}/>: <View style={{width:'50%'}}/> }
-                    </View>
-                }
-          />
+            <ScrollView>
+                {recipeViewlist}
+            </ScrollView>
         )
 };
