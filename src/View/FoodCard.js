@@ -3,6 +3,7 @@ import { StyleSheet} from 'react-native';
 import RecipeService from '../Service/RecipeService'
 import React, { useState } from 'react';
 import useStore from '../Model/Store'
+import RecipeModal from '../View/RecipeModal'
 
 async function getImageUrl(imageName, whenDone){
   var result = await RecipeService.getImageUrl(imageName);
@@ -17,9 +18,9 @@ async function getImageUrl(imageName, whenDone){
 
 export default function FoodCard(props){
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const modifyNeedRefresh = useStore((state) => state.modifyNeedRefresh)
-  const modifyRecipeModalVisible = useStore((state) => state.modifyRecipeModalVisible)
 
   if (imageUrl == ""){
     getImageUrl(props.imageName, setImageUrl);
@@ -29,7 +30,7 @@ export default function FoodCard(props){
   return (
       <TouchableOpacity style={styles.container} onPress={_ => setIsMenuVisible(false)} onLongPress={_ => setIsMenuVisible(true)}>
         {isMenuVisible ?<View style={{zIndex:88, marginBottom: -75}}>
-        <TouchableOpacity onPress={_ => {setIsMenuVisible(false); modifyRecipeModalVisible(true);}}>
+        <TouchableOpacity onPress={_ => {setIsMenuVisible(false); setIsModalVisible(true);}}>
           <Text style={{textAlign: 'center',
            color:'white', backgroundColor:'rgba(18,90,6,1)', borderRadius:5, 
            padding:7, marginLeft:'40%', fontSize:15,
@@ -47,6 +48,7 @@ export default function FoodCard(props){
           {props.name}
         </Text>
       </View>
+      {isModalVisible ? <RecipeModal hideModal={() => setIsModalVisible(false)}/> : null}
       </TouchableOpacity>
     )
 }
