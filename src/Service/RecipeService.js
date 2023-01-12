@@ -64,14 +64,17 @@ export default class RecipeService{
 
     static async getAllRecipe(){
         let recipeList =[];
-        recipeList.push(new Recipe("Böff","Böff","Köret","böff.jpg"));
-
+        const querySnapshot = await getDocs(collection(db, "recipes"));
+        querySnapshot.forEach((doc) => {
+            let recipe = new Recipe(doc.id, doc.data().name, !Array.isArray(doc.data().tags) ? doc.data().tags.split(',').map(x => x.trim()) : doc.data().tags, doc.data().imageName)
+            recipeList.push(recipe);
+         });
 
         return recipeList;
     }
 
     static async getImageUrl(name){
-        if (name == undefined){
+        if (name == undefined || name==''){
             return '';
         }
 
