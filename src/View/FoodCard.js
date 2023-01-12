@@ -48,7 +48,7 @@ export default function FoodCard(props){
           {props.name}
         </Text>
       </View>
-      {isModalVisible ? <RecipeModal hideModal={() => setIsModalVisible(false)}/> : null}
+      {isModalVisible ? <RecipeModal name={props.name} tags={props.tags} imageUrl={imageUrl} hideModal={() => setIsModalVisible(false)}/> : null}
       </TouchableOpacity>
     )
 }

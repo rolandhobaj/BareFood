@@ -64,7 +64,8 @@ export default class RecipeService{
 
     static async getAllRecipe(){
         let recipeList =[];
-        recipeList.push(new Recipe("Gombapaprikás", "Gombapaprikás","Főétel","gombapaprikás.jpg"));
+        recipeList.push(new Recipe("Böff","Böff","Köret","böff.jpg"));
+
 
         return recipeList;
     }

@@ -10,12 +10,10 @@ import * as ImagePicker from 'expo-image-picker';
 
 
 export default function RecipeModal(props){
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState("");
     const [name, setName] = useState("");
     const [tags, setTags] = useState("");
     const [imageName, setImageName] = useState("");
-    const [nameIsEmpty, setNameIsEmpty] = useState(false);
-    const [tagsIsEmpty, setTagsIsEmpty] = useState(false);
     const modifyNeedRefresh = useStore(s => s.modifyNeedRefresh);
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
@@ -44,8 +42,6 @@ export default function RecipeModal(props){
         setTags("");
         setImageName("");
         setImage("");
-        setNameIsEmpty(false);
-        setTagsIsEmpty(false);
         props.hideModal();
      };
 
@@ -76,8 +72,24 @@ export default function RecipeModal(props){
          setImage(result.assets[0].uri);
        }
      };
-   
-  
+
+    showName = props.name;
+    if (name != '' && name != showName){
+      showName = name;
+    }
+
+    showTags = props.tags;
+    if (tags != '' && tags != showTags){
+      showTags = tags;
+    }
+
+    showImage = props.imageUrl;
+    if (image != '' && image != showImage){
+      showImage = image;
+    }
+
+    console.log(showImage);
+
     return (
         <Modal 
             isVisible={true}
@@ -89,14 +101,14 @@ export default function RecipeModal(props){
   
             <View style={{flexDirection:'row', margin:10}}>
                 <Text style={{color:'white', fontSize:17, padding:3, marginRight:10}}>Név:</Text>
-                <TextInput placeholder="Írj ide..." width='78%' onChangeText={setName} backgroundColor='white' 
-                style={{paddingLeft:10, fontSize:17}} borderColor='red' borderWidth={nameIsEmpty ? 1.5 : 0}/>
+                <TextInput placeholder="Írj ide..." width='78%' value={showName} onChangeText={setName} backgroundColor='white' 
+                style={{paddingLeft:10, fontSize:17}} borderColor='red' borderWidth={showName=="" ? 1.5 : 0}/>
             </View>
             
             <View style={{flexDirection:'row', margin:10}}>
                 <Text style={{color:'white', fontSize:17, padding:4, marginRight:10}}>Címkék:</Text>
-                <TextInput placeholder="Vesszővel elválasztva..." width='69%' onChangeText={setTags} 
-                backgroundColor='white' style={{paddingLeft:10, fontSize:17}} borderColor='red' borderWidth={tagsIsEmpty ? 1.5 : 0}/>
+                <TextInput placeholder="Vesszővel elválasztva..." width='69%' value={showTags} onChangeText={setTags} 
+                backgroundColor='white' style={{paddingLeft:10, fontSize:17}} borderColor='red' borderWidth={showTags=="" ? 1.5 : 0}/>
             </View>
 
             <View style={{ flex: 1, marginTop:20, alignItems:'center'}}>
@@ -106,7 +118,7 @@ export default function RecipeModal(props){
                     <Text style={{color:'white', fontSize:20}}>Válassz képet a galériából</Text>
                   </View>
               </TouchableOpacity>
-              {image && !isKeyboardVisible && <Image source={{ uri: image }} style={{ width: 200, height: 200, marginTop:10 }} />}
+              {showImage && !isKeyboardVisible && <Image source={{ uri: showImage }} style={{ width: 200, height: 200, marginTop:10 }} />}
             </View>
 
             <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15, marginBottom:50}}>
