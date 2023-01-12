@@ -10,9 +10,14 @@ import * as ImagePicker from 'expo-image-picker';
 
 
 export default function RecipeModal(props){
-    const [image, setImage] = useState("");
-    const [name, setName] = useState("");
-    const [tags, setTags] = useState("");
+    const [image, setImage] = useState(null);
+    
+    const [name, setName] = useState(null);
+    const [tags, setTags] = useState(null);
+
+    const [nameIsEmpty, setNameIsEmpty] = useState(false);
+    const [tagsIsEmpty, setTagsIsEmpty] = useState(false);
+
     const [imageName, setImageName] = useState("");
     const modifyNeedRefresh = useStore(s => s.modifyNeedRefresh);
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
@@ -45,16 +50,35 @@ export default function RecipeModal(props){
         props.hideModal();
      };
 
+     
+    showName = props.name;
+    if (name != null && name != showName){
+      showName = name;
+    }
+
+    showTags = props.tags;
+    if (tags != null && tags != showTags){
+      showTags = tags;
+    }
+
+    showImage = props.imageUrl;
+    if (image != null && image != showImage){
+      showImage = image;
+    }
+
     const saveImage = async() => {
       setNameIsEmpty(name == "");
       setTagsIsEmpty(tags == "");
 
-      if (name == "" || tags ==""){
+      if (showName == "" || showTags ==""){
         return
       }
 
       toggleModal();
-      RecipeService.addRecipe(new Recipe(name, name, tags, imageName), image, modifyNeedRefresh)
+      if (props.name != ""){
+        RecipeService.deleteItem(props.name)
+      }
+      RecipeService.addRecipe(new Recipe(showName, showName, showTags, imageName), image, modifyNeedRefresh)
     }
 
      const pickImage = async () => {
@@ -73,22 +97,6 @@ export default function RecipeModal(props){
        }
      };
 
-    showName = props.name;
-    if (name != '' && name != showName){
-      showName = name;
-    }
-
-    showTags = props.tags;
-    if (tags != '' && tags != showTags){
-      showTags = tags;
-    }
-
-    showImage = props.imageUrl;
-    if (image != '' && image != showImage){
-      showImage = image;
-    }
-
-    console.log(showImage);
 
     return (
         <Modal 
@@ -102,13 +110,13 @@ export default function RecipeModal(props){
             <View style={{flexDirection:'row', margin:10}}>
                 <Text style={{color:'white', fontSize:17, padding:3, marginRight:10}}>Név:</Text>
                 <TextInput placeholder="Írj ide..." width='78%' value={showName} onChangeText={setName} backgroundColor='white' 
-                style={{paddingLeft:10, fontSize:17}} borderColor='red' borderWidth={showName=="" ? 1.5 : 0}/>
+                style={{paddingLeft:10, fontSize:17}} borderColor='red' borderWidth={nameIsEmpty ? 1.5 : 0}/>
             </View>
             
             <View style={{flexDirection:'row', margin:10}}>
                 <Text style={{color:'white', fontSize:17, padding:4, marginRight:10}}>Címkék:</Text>
                 <TextInput placeholder="Vesszővel elválasztva..." width='69%' value={showTags} onChangeText={setTags} 
-                backgroundColor='white' style={{paddingLeft:10, fontSize:17}} borderColor='red' borderWidth={showTags=="" ? 1.5 : 0}/>
+                backgroundColor='white' style={{paddingLeft:10, fontSize:17}} borderColor='red' borderWidth={tagsIsEmpty ? 1.5 : 0}/>
             </View>
 
             <View style={{ flex: 1, marginTop:20, alignItems:'center'}}>
