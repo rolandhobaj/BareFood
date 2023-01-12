@@ -64,11 +64,7 @@ export default class RecipeService{
 
     static async getAllRecipe(){
         let recipeList =[];
-        const querySnapshot = await getDocs(collection(db, "recipes"));
-        querySnapshot.forEach((doc) => {
-            let recipe = new Recipe(doc.id, doc.data().name, doc.data().tags.split(',').map(x => x.trim()), doc.data().imageName)
-            recipeList.push(recipe);
-         });
+        recipeList.push(new Recipe("Gombapaprikás", "Gombapaprikás","Főétel","gombapaprikás.jpg"));
 
         return recipeList;
     }

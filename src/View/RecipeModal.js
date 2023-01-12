@@ -7,11 +7,9 @@ import RecipeService from '../Service/RecipeService'
 import useStore from '../Model/Store'
 
 import * as ImagePicker from 'expo-image-picker';
-import { FAB } from 'react-native-elements';
 
 
-export default function RecipeModal(){
-    const [isModalVisible, setModalVisible] = useState(false);
+export default function RecipeModal(props){
     const [image, setImage] = useState(null);
     const [name, setName] = useState("");
     const [tags, setTags] = useState("");
@@ -19,8 +17,6 @@ export default function RecipeModal(){
     const [nameIsEmpty, setNameIsEmpty] = useState(false);
     const [tagsIsEmpty, setTagsIsEmpty] = useState(false);
     const modifyNeedRefresh = useStore(s => s.modifyNeedRefresh);
-    const isRecipeModalVisible = useStore(s => s.isRecipeModalVisible);
-    const modifyRecipeModalVisible = useStore((state) => state.modifyRecipeModalVisible)
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
     useEffect(() => {
@@ -44,21 +40,14 @@ export default function RecipeModal(){
      }, []);
 
     const toggleModal = async () => {
-      setModalVisible(!isModalVisible);
-      if (!isModalVisible){
         setName("");
         setTags("");
         setImageName("");
         setImage("");
         setNameIsEmpty(false);
         setTagsIsEmpty(false);
-      }
+        props.hideModal();
      };
-
-    if (isRecipeModalVisible){
-        modifyRecipeModalVisible(false);
-        toggleModal();
-    }
 
     const saveImage = async() => {
       setNameIsEmpty(name == "");
@@ -91,7 +80,7 @@ export default function RecipeModal(){
   
     return (
         <Modal 
-            isVisible={isModalVisible || isRecipeModalVisible} 
+            isVisible={true}
             backdropOpacity={0.90}
             backdropTransitionOutTiming={0}
             style={{flex:1}}>
