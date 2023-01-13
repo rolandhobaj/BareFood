@@ -36,7 +36,7 @@ export default function FoodCard(props){
            padding:7, marginLeft:'40%', fontSize:15,
            marginBottom:3}}>Módosítás</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={_ => {setIsMenuVisible(false); RecipeService.deleteItem(props.name, modifyNeedRefresh);}}>
+        <TouchableOpacity onPress={_ => {setIsMenuVisible(false); RecipeService.deleteItem(props.name, true, modifyNeedRefresh);}}>
           <Text style={{textAlign: 'center', color:'white', 
           backgroundColor:'rgba(18,90,6,0.9)', borderRadius:5, padding:7, marginLeft:'40%',
            fontSize:15, marginBottom:3}}>Töröl</Text>

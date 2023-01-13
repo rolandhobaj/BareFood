@@ -78,10 +78,8 @@ export default function RecipeModal(props){
       if (props.name != "" && props.name != undefined){
         let splitBySlash = showImage.split('/');
         let t = splitBySlash[splitBySlash.length - 1].split('?')[0];
-        console.log(t);
-        RecipeService.deleteItem(props.name, (_) => RecipeService.addRecipe(new Recipe(showName, showName, showTags, t), showImage, modifyNeedRefresh));
+        RecipeService.deleteItem(props.name, false, (_) => RecipeService.addRecipe(new Recipe(showName, showName, showTags, t), showImage, modifyNeedRefresh));
       } else {
-        console.log("Add" + imageName + " - " + showImage)
         RecipeService.addRecipe(new Recipe(showName, showName, showTags, imageName), showImage, modifyNeedRefresh);
       }
     }

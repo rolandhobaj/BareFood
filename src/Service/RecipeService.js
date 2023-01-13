@@ -13,7 +13,7 @@ const storage = getStorage(app);
 export default class RecipeService{
 
     static async addRecipe(recipe, imagePath, whenDone){
-        await setDoc(doc(db, "Recipes2", recipe.name), {
+        await setDoc(doc(db, "recipes", recipe.name), {
             name: recipe.name,
             tags: recipe.tags,
             imageName: recipe.imageName
@@ -44,7 +44,7 @@ export default class RecipeService{
         })
       }
 
-    static async deleteItem(recipeName, whenDone){
+    static async deleteItem(recipeName, deleteObject, whenDone){
         let allRecipes = await this.getAllRecipe();
         if (allRecipes.length == 1){
             return;
@@ -55,8 +55,12 @@ export default class RecipeService{
         }
 
         var selectedRecipe = selectedIdList[0];
-        await deleteDoc(doc(db, "Recipes2", selectedRecipe.id));
+        await deleteDoc(doc(db, "recipes", selectedRecipe.id));
 
+        if (!deleteObject || selectedRecipe.imageName == "" || selectedRecipe.imageName == undefined){
+            whenDone(true);
+            return;
+        }
         const desertRef = ref(storage, selectedRecipe.imageName);
         await deleteObject(desertRef)
         whenDone(true)
@@ -64,7 +68,7 @@ export default class RecipeService{
 
     static async getAllRecipe(){
         let recipeList =[];
-        const querySnapshot = await getDocs(collection(db, "Recipes2"));
+        const querySnapshot = await getDocs(collection(db, "recipes"));
         querySnapshot.forEach((doc) => {
             let recipe = new Recipe(doc.id, doc.data().name, !Array.isArray(doc.data().tags) ? doc.data().tags.split(',').map(x => x.trim()) : doc.data().tags, doc.data().imageName)
             recipeList.push(recipe);
