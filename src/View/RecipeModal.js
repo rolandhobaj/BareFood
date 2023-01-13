@@ -75,10 +75,14 @@ export default function RecipeModal(props){
       }
 
       toggleModal();
-      if (props.name != ""){
-        RecipeService.deleteItem(props.name)
+      if (props.name != "" && props.name != undefined){
+        let splitBySlash = showImage.split('/');
+        let t = splitBySlash[splitBySlash.length - 1].split('.jpeg')[0] + ".jpeg";
+        RecipeService.deleteItem(props.name, (_) => RecipeService.addRecipe(new Recipe(showName, showName, showTags, t), showImage, modifyNeedRefresh));
+      } else {
+        console.log("Add" + imageName + " - " + showImage)
+        RecipeService.addRecipe(new Recipe(showName, showName, showTags, imageName), showImage, modifyNeedRefresh);
       }
-      RecipeService.addRecipe(new Recipe(showName, showName, showTags, imageName), image, modifyNeedRefresh)
     }
 
      const pickImage = async () => {

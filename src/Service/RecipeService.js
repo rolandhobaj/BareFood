@@ -13,7 +13,7 @@ const storage = getStorage(app);
 export default class RecipeService{
 
     static async addRecipe(recipe, imagePath, whenDone){
-        await setDoc(doc(db, "recipes", recipe.name), {
+        await setDoc(doc(db, "Recipes2", recipe.name), {
             name: recipe.name,
             tags: recipe.tags,
             imageName: recipe.imageName
@@ -55,7 +55,7 @@ export default class RecipeService{
         }
 
         var selectedRecipe = selectedIdList[0];
-        await deleteDoc(doc(db, "recipes", selectedRecipe.id));
+        await deleteDoc(doc(db, "Recipes2", selectedRecipe.id));
 
         const desertRef = ref(storage, selectedRecipe.imageName);
         await deleteObject(desertRef)
@@ -64,7 +64,7 @@ export default class RecipeService{
 
     static async getAllRecipe(){
         let recipeList =[];
-        const querySnapshot = await getDocs(collection(db, "recipes"));
+        const querySnapshot = await getDocs(collection(db, "Recipes2"));
         querySnapshot.forEach((doc) => {
             let recipe = new Recipe(doc.id, doc.data().name, !Array.isArray(doc.data().tags) ? doc.data().tags.split(',').map(x => x.trim()) : doc.data().tags, doc.data().imageName)
             recipeList.push(recipe);
