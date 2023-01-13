@@ -27,10 +27,6 @@ export default function FoodCard(props){
     return;
   }
 
-  if (props.name == "Pisztácia"){
-    console.log(props.imageName);
-  }
-
   return (
       <TouchableOpacity style={styles.container} onPress={_ => setIsMenuVisible(false)} onLongPress={_ => setIsMenuVisible(true)}>
         {isMenuVisible ?<View style={{zIndex:88, marginBottom: -75}}>

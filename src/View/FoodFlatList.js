@@ -1,5 +1,6 @@
 import { React, useState } from 'react'
 import { FlatList, View, Text, ScrollView } from 'react-native';
+import uuid from 'react-native-uuid';
 
 import FoodCard from './FoodCard'
 import RecipeService from '../Service/RecipeService'
@@ -74,6 +75,7 @@ function getMappedRecipes(data, tag){
     return recipes;
 };
 
+
 export default function FoodFlatList() {
         const [recipes, setRecipe] = useState([]);
         const searchedTag = useStore((state) => state.searchedTag)
@@ -90,7 +92,7 @@ export default function FoodFlatList() {
         for (let i = 0; i< mappedRecipes.length; ++i){
             let item = mappedRecipes[i];
             recipeViewlist.push( 
-                <View key={i} style={{ flexDirection: 'row' }}>
+                <View key={uuid.v4()} style={{ flexDirection: 'row' }}>
                     <FoodCard style={{flex:2}} tags={item.firstKey.tags} name={item.firstKey.name} imageName={item.firstKey.imageName}/>
                     {item.secondKey!= null ? <FoodCard name={item.secondKey.name} tags={item.firstKey.tags} imageName={item.secondKey.imageName}/>: <View style={{width:'50%'}}/> }
                 </View>
