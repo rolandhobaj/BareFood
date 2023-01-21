@@ -1,8 +1,6 @@
 import Recipe from '../Model/Recipe'
 import app from '../Service/FirebaseApp'
-import * as FileSystem from 'expo-file-system';
 
-import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
 import { collection, getDocs, setDoc, doc, deleteDoc } from "firebase/firestore"; 
