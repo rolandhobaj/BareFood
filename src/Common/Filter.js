@@ -12,21 +12,19 @@ function removeSpecialCharacters(text) {
     return text;
   }
 
-export default function filter(data, tag){
+export default function filter(recipes, tag){
     let searchedTag = removeSpecialCharacters(tag.toUpperCase());
-    return data.filter(r => {
-        let recipeName = removeSpecialCharacters(r.name.toUpperCase());
+    return recipes.filter(recipe => {
+        let recipeName = removeSpecialCharacters(recipe.name.toUpperCase());
         if (recipeName.includes(searchedTag)){
-            return true
+            return true;
         }
 
-        for (let i = 0; i < r.tags.length; i++) {
-            let recipeTag = removeSpecialCharacters(r.tags[i].toUpperCase());
-            if (recipeTag.includes(searchedTag)){
-                return true;
-            }
-        }
+        var matchingTags = recipe.tags.filter(tag => {
+            let recipeTag = removeSpecialCharacters(tag.toUpperCase());
+            return recipeTag.includes(searchedTag);
+        })
 
-        return false;
+        return matchingTags.length != 0;
     });
 }
