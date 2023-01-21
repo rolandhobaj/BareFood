@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'rgba(0,0,0,0.0)',
       borderTopWidth: 0,
       borderBottomColor: 0,
-      marginTop:25,
+      marginTop:5,
     },
     inputContainer: {
       backgroundColor: 'rgba(18,57,6,0.35)'
