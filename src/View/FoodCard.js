@@ -1,12 +1,11 @@
 import { Text, Image, View, TouchableOpacity } from 'react-native';
 import { StyleSheet} from 'react-native';
-import RecipeService from '../Service/RecipeService'
 import React, { useState } from 'react';
 import useStore from '../Model/Store'
 import RecipeModal from '../View/RecipeModal'
 
-async function getImageUrl(imageName, whenDone){
-  var result = await RecipeService.getImageUrl(imageName);
+async function getImageUrl(recipeService, imageName, whenDone){
+  var result = await recipeService.getImageUrl(imageName);
   if (result == ""){
     whenDone("Not Found");
     return;
@@ -22,8 +21,8 @@ export default function FoodCard(props){
   const [imageUrl, setImageUrl] = useState("");
   const modifyNeedRefresh = useStore((state) => state.modifyNeedRefresh)
 
-  if (imageUrl == ""){
-    getImageUrl(props.imageName, setImageUrl);
+  if (props.imageUrl == undefined && imageUrl == ""){
+    getImageUrl(props.recipeService, props.imageName, setImageUrl);
     return;
   }
 
@@ -36,7 +35,7 @@ export default function FoodCard(props){
            padding:7, marginLeft:'40%', fontSize:15,
            marginBottom:3}}>Módosítás</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={_ => {setIsMenuVisible(false); RecipeService.deleteItem(props.name, true, modifyNeedRefresh);}}>
+        <TouchableOpacity onPress={_ => {setIsMenuVisible(false); props.recipeService.deleteItem(props.name, true, modifyNeedRefresh);}}>
           <Text style={{textAlign: 'center', color:'white', 
           backgroundColor:'rgba(18,90,6,0.9)', borderRadius:5, padding:7, marginLeft:'40%',
            fontSize:15, marginBottom:3}}>Töröl</Text>
@@ -44,9 +43,7 @@ export default function FoodCard(props){
         </View> : null}
       <View style={{backgroundColor: 'rgba(18,57,6,0.35)', borderRadius:10, padding:10}}>
         {imageUrl != '' && imageUrl != "Not Found" ? <Image source={{uri: imageUrl}} style={styles.image} /> : null}
-        <Text style={styles.text}>
-          {props.name}
-        </Text>
+        <Text style={styles.text} testID="RecipeName" text={props.name}/>
       </View>
       {isModalVisible ? <RecipeModal name={props.name} tags={props.tags.join(", ")} imageUrl={imageUrl} hideModal={() => setIsModalVisible(false)}/> : null}
       </TouchableOpacity>

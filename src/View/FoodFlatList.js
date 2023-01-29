@@ -61,8 +61,8 @@ export default function FoodFlatList() {
             let item = mappedRecipes[i];
             recipeViewlist.push( 
                 <View key={uuid.v4()} style={{ flexDirection: 'row' }}>
-                    <FoodCard style={{flex:2}} tags={item.firstKey.tags} name={item.firstKey.name} imageName={item.firstKey.imageName}/>
-                    {item.secondKey!= null ? <FoodCard name={item.secondKey.name} tags={item.firstKey.tags} imageName={item.secondKey.imageName}/>: <View style={{width:'50%'}}/> }
+                    <FoodCard recipeService={RecipeService} style={{flex:2}} tags={item.firstKey.tags} name={item.firstKey.name} imageName={item.firstKey.imageName}/>
+                    {item.secondKey!= null ? <FoodCard recipeService={RecipeService} name={item.secondKey.name} tags={item.firstKey.tags} imageName={item.secondKey.imageName}/>: <View style={{width:'50%'}}/> }
                 </View>
                 )
         }
