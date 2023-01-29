@@ -103,6 +103,7 @@ export default function RecipeModal(props){
 
     return (
         <Modal 
+            testID='recipeModal'
             isVisible={true}
             backdropOpacity={0.90}
             backdropTransitionOutTiming={0}

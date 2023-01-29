@@ -11,11 +11,12 @@ export default function NewRecipeButton(){
     return (
       <View>
        <TouchableOpacity
+          testID='showModalButton'
           onPress={_ => setIsModalVisible(true)}
           style={styles.roundButton}>
              <Icon name='add' color='white' size={40} containerStyle={{margin:5}}/>
         </TouchableOpacity>
-        {isModalVisible ? <RecipeModal hideModal={() => setIsModalVisible(false)}/> : null}
+        {isModalVisible ? <RecipeModal testID='recipeModal' hideModal={() => setIsModalVisible(false)}/> : null}
       </View>
     );
 }
