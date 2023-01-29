@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { TouchableOpacity, StyleSheet, View, Text, Button, TextInput, Image, Keyboard } from 'react-native';
 import { Icon } from '@rneui/themed';
 import RecipeModal from '../View/RecipeModal'
-import useStore from '../Model/Store'
-
 
 export default function NewRecipeButton(){
     const [isModalVisible, setIsModalVisible] = useState(false);
