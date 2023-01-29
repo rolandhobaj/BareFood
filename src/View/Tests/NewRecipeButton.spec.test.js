@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react-native';
-import NewRecipeButton from './NewRecipeButton';
+import NewRecipeButton from '../NewRecipeButton.js';
 
 test('modal is not visible by default', async () => {
   var page = render(<NewRecipeButton/>);
