@@ -26,9 +26,11 @@ export default function FoodCard(props){
     return;
   }
 
+  console.log("")
+
   return (
-      <TouchableOpacity style={styles.container} onPress={_ => setIsMenuVisible(false)} onLongPress={_ => setIsMenuVisible(true)}>
-        {isMenuVisible ?<View style={{zIndex:88, marginBottom: -75}}>
+      <TouchableOpacity testID='FullFoodCard' style={styles.container} onPress={_ => setIsMenuVisible(false)} onLongPress={_ => setIsMenuVisible(true)}>
+        {isMenuVisible ? <View testID='Menu' style={{zIndex:88, marginBottom: -75}}>
         <TouchableOpacity onPress={_ => {setIsMenuVisible(false); setIsModalVisible(true);}}>
           <Text style={{textAlign: 'center',
            color:'white', backgroundColor:'rgba(18,90,6,1)', borderRadius:5, 

@@ -20,6 +20,17 @@ test('Recipe Name is visible', async () => {
   expect(recipeName[0].props.text).toEqual("Recipe Name");
 });
 
+test('When clicked on foodcard, menu appears', async () => {
+  var page = await render(<FoodCard recipeService={FakeRecipeService} imageUrl="imageUrl" tags={"Tag"} name={"Recipe Name"} imageName={"Image Name"}/>);
+
+  var recipeCard = page.queryAllByTestId('FullFoodCard')[0];
+  fireEvent(recipeCard, 'onLongPress');
+  
+  var menu = page.queryAllByTestId('Menu');
+
+  expect(menu.length).toEqual(1);
+});
+
 test('Image is loaded when empty ', async () => {
   var fakeRecipe = new FakeRecipeService;
   await waitFor( async () => render(<FoodCard recipeService={fakeRecipe} tags={"Tag"} name={"Recipe Name"} imageName={"Image Name"}/>));
