@@ -2,6 +2,7 @@ import { SearchBar } from 'react-native-elements';
 import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import useStore from '../Model/Store'
+import CustomSearchBar from './CustomSearchBar'
 
 export default function FoodSearchBar(){
   const [search, setSearch] = useState(0);
@@ -14,15 +15,7 @@ export default function FoodSearchBar(){
 
     return (
       <View>
-        <SearchBar
-          containerStyle={styles.container}
-          inputContainerStyle={styles.inputContainer}
-          inputStyle={styles.iconStyle}
-          placeholderTextColor='white'
-          placeholder="Írj ide..."
-          searchIcon={{color:'white'}}
-          onChangeText={updateTag}
-          value={search}/>
+       <CustomSearchBar value={search} onChange={updateTag} />
           <View style={styles.quickSearchContainer}>
           <TouchableOpacity style={styles.quickSearch} onPress={() => updateTag("Leves")}>
             <Text style={styles.innerText}>Leves</Text>
