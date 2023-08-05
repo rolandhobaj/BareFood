@@ -43,7 +43,9 @@ export default function FoodCard(props){
         </View> : null}
       <View style={{backgroundColor: 'rgba(18,57,6,0.35)', borderRadius:10, padding:10}}>
         {imageUrl != '' && imageUrl != "Not Found" ? <Image source={{uri: imageUrl}} style={styles.image} /> : null}
-        <Text style={styles.text} testID="RecipeName" text={props.name}/>
+        <Text style={styles.text} testID="RecipeName">
+          {props.name}
+        </Text>
       </View>
       {isModalVisible ? <RecipeModal name={props.name} tags={props.tags.join(", ")} imageUrl={imageUrl} hideModal={() => setIsModalVisible(false)}/> : null}
       </TouchableOpacity>
