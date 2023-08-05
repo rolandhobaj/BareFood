@@ -29,11 +29,13 @@ function getMappedRecipes(data, tag){
         const chunk = data.slice(i, i + chunkSize);
         if (chunk.length >= 2){
             recipes.push({
+                id: uuid.v4(),
                 firstKey:{name: chunk[0].name, imageName: chunk[0].imageName, tags:chunk[0].tags},
                 secondKey:{name: chunk[1].name, imageName: chunk[1].imageName, tags:chunk[1].tags}
             })
         } else {
             recipes.push({
+                id: uuid.v4(),
                 firstKey:{name: chunk[0].name, imageName: chunk[0].imageName, tags:chunk[0].tags},
                 secondKey:null
             })
@@ -55,21 +57,20 @@ export default function FoodFlatList() {
             modifyNeedRefresh(false);
         }
         
-        var recipeViewlist = []
         var mappedRecipes = getMappedRecipes(recipes, searchedTag);
-        for (let i = 0; i< mappedRecipes.length; ++i){
-            let item = mappedRecipes[i];
-            recipeViewlist.push( 
-                <View key={uuid.v4()} style={{ flexDirection: 'row' }}>
+
+        const renderItem = ({ item }) => (
+            <View key={item.id} style={{ flexDirection: 'row' }}>
                     <FoodCard recipeService={RecipeService} style={{flex:2}} tags={item.firstKey.tags} name={item.firstKey.name} imageName={item.firstKey.imageName}/>
                     {item.secondKey!= null ? <FoodCard recipeService={RecipeService} name={item.secondKey.name} tags={item.firstKey.tags} imageName={item.secondKey.imageName}/>: <View style={{width:'50%'}}/> }
-                </View>
-                )
-        }
+            </View>
+          );
 
         return (
-            <ScrollView>
-                {recipeViewlist}
-            </ScrollView>
+            <FlatList
+            data={mappedRecipes}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
         )
 };
