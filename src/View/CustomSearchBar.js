@@ -23,7 +23,7 @@ const CustomSearchBar = ({ value, onChange }) => {
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         leftIcon={<Icon name="search" color='white' type="font-awesome" />}
-        rightIcon={isFocused || value ? <FontAwesome name="times" color='white' size={24} onPress={handleClear} /> : null}
+        rightIcon={isFocused || value ? <FontAwesome name="close" color='white' size={20} onPress={handleClear} /> : null}
       />
     </View>
   );
