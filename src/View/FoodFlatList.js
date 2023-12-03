@@ -1,13 +1,10 @@
-import { React, useState } from 'react'
-import { FlatList, View, Text, ScrollView } from 'react-native';
-import uuid from 'react-native-uuid';
+import { React, useState, useEffect } from 'react'
+import { ScrollView } from 'react-native';
+import { Card, Title } from 'react-native-paper';
 
-import FoodCard from './FoodCard'
 import RecipeService from '../Service/RecipeService'
 import filter from '../Common/Filter'
 import useStore from '../Model/Store'
-
-
 
 async function downloadList(whenDone){
     let data = (await RecipeService.getAllRecipe()).sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase());
@@ -23,54 +20,30 @@ function getMappedRecipes(data, tag){
        data =  filter(data, tag);
     }
 
-    const chunkSize = 2;
-    let recipes = [];
-    for (let i = 0; i < data.length; i += chunkSize) {
-        const chunk = data.slice(i, i + chunkSize);
-        if (chunk.length >= 2){
-            recipes.push({
-                id: uuid.v4(),
-                firstKey:{name: chunk[0].name, imageName: chunk[0].imageName, tags:chunk[0].tags},
-                secondKey:{name: chunk[1].name, imageName: chunk[1].imageName, tags:chunk[1].tags}
-            })
-        } else {
-            recipes.push({
-                id: uuid.v4(),
-                firstKey:{name: chunk[0].name, imageName: chunk[0].imageName, tags:chunk[0].tags},
-                secondKey:null
-            })
-        }
-    }
-
-    return recipes;
+    return data;
 };
 
 
 export default function FoodFlatList() {
         const [recipes, setRecipe] = useState([]);
         const searchedTag = useStore((state) => state.searchedTag)
-        const needRefresh = useStore((state) => state.needRefresh)
-        const modifyNeedRefresh = useStore((state) => state.modifyNeedRefresh)
 
-        if (needRefresh){
+        useEffect(() => {
             downloadList(setRecipe);
-            modifyNeedRefresh(false);
-        }
+          }, []);
         
+
         var mappedRecipes = getMappedRecipes(recipes, searchedTag);
 
-        const renderItem = ({ item }) => (
-            <View key={item.id} style={{ flexDirection: 'row' }}>
-                    <FoodCard recipeService={RecipeService} style={{flex:2}} tags={item.firstKey.tags} name={item.firstKey.name} imageName={item.firstKey.imageName}/>
-                    {item.secondKey!= null ? <FoodCard recipeService={RecipeService} name={item.secondKey.name} tags={item.firstKey.tags} imageName={item.secondKey.imageName}/>: <View style={{width:'50%'}}/> }
-            </View>
-          );
-
         return (
-            <FlatList
-            data={mappedRecipes}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          />
+         <ScrollView contentContainerStyle={{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', padding: 20}}>
+             {mappedRecipes.map((card) => (
+                <Card key={card.imageName} mode='outline' style={{width: '48%', marginBottom:15, backgroundColor: 'rgba(18,57,6,0.35)'}}>
+                    <Card.Cover source={{ uri: card.imageName} }  style={{ margin: 8, height: 120, backgroundColor: 'red'}}/>
+                    <Card.Content style={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <Title style={{ fontSize: 17, color: 'white', fontWeight: 'bold',}}>{card.name}</Title>
+                    </Card.Content>
+                </Card>))}
+         </ScrollView>
         )
 };

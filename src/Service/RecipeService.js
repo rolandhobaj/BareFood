@@ -63,12 +63,28 @@ export default class RecipeService {
   }
 
   static async getAllRecipe() {
-    const recipeList =[];
-    const querySnapshot = await getDocs(collection(db, 'recipes'));
+    let firstUrl = await this.getImageUrl("dd3354a2-dcd6-4225-b66b-1fd4a9faca34.jpeg");
+    let secondUrl = await this.getImageUrl("ananászoscsirke.jpg");
+    const recipeList = [
+      {
+        id: "Alfredo tészta",
+        imageName: firstUrl,
+        name: "Alfredo tészta",
+        tags: ["Főétel"],
+      },
+      
+      {
+        id: "Ananászoscsirke",
+        imageName: secondUrl,
+        name: "Ananászos csirke",
+        tags: ["Főétel"],
+      }
+    ];
+    /*const querySnapshot = await getDocs(collection(db, 'recipes'));
     querySnapshot.forEach((doc) => {
       const recipe = new Recipe(doc.id, doc.data().name, !Array.isArray(doc.data().tags) ? doc.data().tags.split(',').map((x) => x.trim()) : doc.data().tags, doc.data().imageName);
       recipeList.push(recipe);
-    });
+    });*/
 
     return recipeList;
   }
