@@ -5,6 +5,9 @@ const useStore = create((set) => ({
   needRefresh: true,
   modifyTag: (tag) => set((state) => ({searchedTag: tag})),
   modifyNeedRefresh: (refresh) => set((state) => ({needRefresh: refresh})),
+
+  selectedRecipe: null,
+  modifySelectedRecipe: (recipe) => set((state) => ({selectedRecipe: recipe})),
 }));
 
 export default useStore;

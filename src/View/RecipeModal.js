@@ -22,6 +22,11 @@ export default function RecipeModal(props){
     const modifyNeedRefresh = useStore(s => s.modifyNeedRefresh);
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
+    let selectedRecipe = useStore((state) => state.selectedRecipe);
+    if (selectedRecipe == null){
+      selectedRecipe = new Recipe(0, "Missing", "", "");
+    }
+
     useEffect(() => {
        const keyboardDidShowListener = Keyboard.addListener(
          'keyboardDidShow',
@@ -43,25 +48,21 @@ export default function RecipeModal(props){
      }, []);
 
     const toggleModal = async () => {
-        setName("");
-        setTags("");
-        setImageName("");
-        setImage("");
         props.hideModal();
      };
 
      
-    showName = props.name;
+    showName = selectedRecipe.name;
     if (name != null && name != showName){
       showName = name;
     }
 
-    showTags = props.tags;
+    showTags = selectedRecipe.tags;
     if (tags != null && tags != showTags){
       showTags = tags;
     }
 
-    showImage = props.imageUrl;
+    showImage = selectedRecipe.imageName;
     if (image != null && image != showImage){
       showImage = image;
     }
@@ -75,10 +76,10 @@ export default function RecipeModal(props){
       }
 
       toggleModal();
-      if (props.name != "" && props.name != undefined){
+      if (selectedRecipe.name != "" && selectedRecipe.name != undefined){
         let splitBySlash = showImage.split('/');
         let t = splitBySlash[splitBySlash.length - 1].split('?')[0];
-        RecipeService.deleteItem(props.name, false, (_) => RecipeService.addRecipe(new Recipe(showName, showName, showTags, t), showImage, modifyNeedRefresh));
+        RecipeService.deleteItem(selectedRecipe.name, false, (_) => RecipeService.addRecipe(new Recipe(showName, showName, showTags, t), showImage, modifyNeedRefresh));
       } else {
         RecipeService.addRecipe(new Recipe(showName, showName, showTags, imageName), showImage, modifyNeedRefresh);
       }
@@ -104,7 +105,7 @@ export default function RecipeModal(props){
     return (
         <Modal 
             testID='recipeModal'
-            isVisible={true}
+            isVisible={props.isVisible}
             backdropOpacity={0.90}
             backdropTransitionOutTiming={0}
             style={{flex:1}}>
@@ -136,6 +137,9 @@ export default function RecipeModal(props){
             <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15, marginBottom:50}}>
                 <TouchableOpacity onPress={toggleModal}>
                   <Icon name='close' color='grey' size={70} containerStyle={{marginLeft:20}}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={toggleModal}>
+                  <Icon name='delete' color='grey' size={70} containerStyle={{marginLeft:20}}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={saveImage}>
                   <Icon name='done' color='green' size={70} containerStyle={{marginRight:20}}/>
