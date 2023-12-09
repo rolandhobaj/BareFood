@@ -138,7 +138,7 @@ export default function RecipeModal(props){
                 <TouchableOpacity onPress={toggleModal}>
                   <Icon name='close' color='grey' size={70} containerStyle={{marginLeft:20}}/>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={toggleModal}>
+                <TouchableOpacity onPress={() => RecipeService.deleteItem(props.name, true, toggleModal)}>
                   <Icon name='delete' color='grey' size={70}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={saveImage}>

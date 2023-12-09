@@ -40,7 +40,7 @@ export default class RecipeService {
     });
   }
 
-  static async deleteItem(recipeName, deleteObject, whenDone) {
+  static async deleteItem(recipeName, whenDone) {
     const allRecipes = await this.getAllRecipe();
     if (allRecipes.length == 1) {
       return;
