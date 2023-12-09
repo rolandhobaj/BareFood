@@ -139,7 +139,7 @@ export default function RecipeModal(props){
                   <Icon name='close' color='grey' size={70} containerStyle={{marginLeft:20}}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={toggleModal}>
-                  <Icon name='delete' color='grey' size={70} containerStyle={{marginLeft:20}}/>
+                  <Icon name='delete' color='grey' size={70}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={saveImage}>
                   <Icon name='done' color='green' size={70} containerStyle={{marginRight:20}}/>
