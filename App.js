@@ -9,9 +9,11 @@ const FoodBear = () => {
   return (
     <View style={styles.container}>
       <ImageBackground source={require('./images/bg.png')} resizeMode="cover" style={styles.image}>
-      <FoodSearchBar/>
-      <FoodFlatList/>
-      <NewRecipeButton/>
+        <View style={styles.contentContainer}>
+          <FoodSearchBar />
+          <FoodFlatList />
+        </View>
+        <NewRecipeButton/>
       </ImageBackground>
     </View>
   );
@@ -23,6 +25,9 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
+  },
+  contentContainer: {
+    flex: 1
   },
 });
 
