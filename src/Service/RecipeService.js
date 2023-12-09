@@ -69,23 +69,36 @@ export default class RecipeService {
       {
         id: "Alfredo tészta",
         imageName: firstUrl,
-        name: "Alfredo tészta",
+        name: "Alfredotésör Alfredo tészta",
         tags: ["Főétel"],
       },
       
       {
         id: "Ananászoscsirke",
         imageName: secondUrl,
-        name: "Ananászos csirke",
+        name: "Ananászos",
         tags: ["Főétel"],
       },
     ];
     /*const querySnapshot = await getDocs(collection(db, 'recipes'));
-    querySnapshot.forEach((doc) => {
-      const recipe = new Recipe(doc.id, doc.data().name, !Array.isArray(doc.data().tags) ? doc.data().tags.split(',').map((x) => x.trim()) : doc.data().tags, doc.data().imageName);
-      recipeList.push(recipe);
-    });*/
 
+    const imageUrlPromises = [];
+
+    querySnapshot.forEach((doc) => {
+      // Push the promise returned by getImageUrl into the array
+      imageUrlPromises.push(this.getImageUrl(doc.data().imageName).then(imageUrl => {
+        return new Recipe(
+          doc.id,
+          doc.data().name,
+          !Array.isArray(doc.data().tags) ? doc.data().tags.split(',').map((x) => x.trim()) : doc.data().tags,
+          imageUrl
+        );
+      }));
+    });
+  
+    // Wait for all promises to resolve
+    const recipeList = await Promise.all(imageUrlPromises);
+*/
     return recipeList;
   }
 

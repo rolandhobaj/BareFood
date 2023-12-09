@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react'
-import { ScrollView } from 'react-native';
-import { Card, Title } from 'react-native-paper';
+import { ScrollView, Text } from 'react-native';
+import { Card } from 'react-native-paper';
 
 import RecipeService from '../Service/RecipeService'
 import filter from '../Common/Filter'
@@ -48,10 +48,10 @@ export default function FoodFlatList() {
         <View>
             <ScrollView contentContainerStyle={{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', padding: 20}}>
                 {mappedRecipes.map((card, index) => (
-                    <Card key={card.imageName} mode='outline' style={{width: '48%', marginBottom:15, backgroundColor: 'rgba(18,57,6,0.35)'}} onPress={() => handlePress(new Recipe(0, card.name, card.tags.join(", "), card.imageName))}>
-                        <Card.Cover source={{ uri: card.imageName} }  style={{ margin: 8, height: 120, backgroundColor: 'red'}}/>
+                    <Card key={card.imageName} mode='outline' style={{width: '48%', marginBottom:12, backgroundColor: 'rgba(18,57,6,0.35)'}} onPress={() => handlePress(new Recipe(0, card.name, card.tags.join(", "), card.imageName))}>
+                        <Card.Cover source={{ uri: card.imageName} }  style={{ margin: 8, height: 120}}/>
                         <Card.Content style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            <Title style={{ fontSize: 17, color: 'white', fontWeight: 'bold',}}>{card.name}</Title>
+                            <Text style={{ fontSize: 16, color: 'white', fontWeight: 'bold', textAlign: 'center'}}>{card.name}</Text>
                         </Card.Content>
                     </Card>))}
             </ScrollView>
