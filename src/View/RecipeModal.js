@@ -24,7 +24,7 @@ export default function RecipeModal(props){
 
     let selectedRecipe = useStore((state) => state.selectedRecipe);
     if (selectedRecipe == null){
-      selectedRecipe = new Recipe(0, "Missing", "", "");
+      selectedRecipe = new Recipe(0, "", "", "");
     }
 
     useEffect(() => {
@@ -109,8 +109,8 @@ export default function RecipeModal(props){
             backdropOpacity={0.90}
             backdropTransitionOutTiming={0}
             style={{flex:1}}>
-          <View style={{ flex: 1 }}>
-            <Text style={{color:'white', margin:50, fontSize:25}}>Új recept hozzáadása</Text>
+          <View style={{ flex: 1}}>
+            <Text style={{color:'white', marginTop:50, marginBottom:50, textAlign: 'center', fontSize:25}}>{props.title}</Text>
   
             <View style={{flexDirection:'row', margin:10}}>
                 <Text style={{color:'white', fontSize:17, padding:3, marginRight:10}}>Név:</Text>

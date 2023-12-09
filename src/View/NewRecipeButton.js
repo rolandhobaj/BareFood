@@ -14,7 +14,7 @@ export default function NewRecipeButton(){
           style={styles.roundButton}>
              <Icon name='add' color='white' size={40} containerStyle={{margin:5}}/>
         </TouchableOpacity>
-        {isModalVisible ? <RecipeModal testID='recipeModal' hideModal={() => setIsModalVisible(false)}/> : null}
+        <RecipeModal title="Új recept hozzáadás" isVisible={isModalVisible} testID='recipeModal' hideModal={() => setIsModalVisible(false)}/>
       </View>
     );
 }

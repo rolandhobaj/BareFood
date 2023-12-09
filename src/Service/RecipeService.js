@@ -78,7 +78,7 @@ export default class RecipeService {
         imageName: secondUrl,
         name: "Ananászos csirke",
         tags: ["Főétel"],
-      }
+      },
     ];
     /*const querySnapshot = await getDocs(collection(db, 'recipes'));
     querySnapshot.forEach((doc) => {
