@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import { TouchableOpacity, StyleSheet, View, Text, Button, TextInput, Image, Keyboard } from 'react-native';
 import { Icon } from '@rneui/themed';
 import RecipeModal from '../View/RecipeModal'
+import useStore from '../Model/Store'
 
 export default function NewRecipeButton(){
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const modifySelectedRecipe = useStore((state) => state.modifySelectedRecipe)
 
     return (
       <View>
        <TouchableOpacity
           testID='showModalButton'
-          onPress={_ => setIsModalVisible(true)}
+          onPress={_ => {modifySelectedRecipe(null); setIsModalVisible(true)}}
           style={styles.roundButton}>
              <Icon name='add' color='white' size={40} containerStyle={{margin:5}}/>
         </TouchableOpacity>

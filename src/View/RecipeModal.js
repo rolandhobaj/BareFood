@@ -75,13 +75,12 @@ export default function RecipeModal(props){
         return
       }
 
-      toggleModal();
       if (selectedRecipe.name != "" && selectedRecipe.name != undefined){
         let splitBySlash = showImage.split('/');
         let t = splitBySlash[splitBySlash.length - 1].split('?')[0];
-        RecipeService.deleteItem(selectedRecipe.name, false, (_) => RecipeService.addRecipe(new Recipe(showName, showName, showTags, t), showImage, modifyNeedRefresh));
+        await RecipeService.deleteItem(selectedRecipe.name, selectedRecipe.imageName, false, (_) => RecipeService.addRecipe(new Recipe(showName, showTags, t), showImage, toggleModal));
       } else {
-        RecipeService.addRecipe(new Recipe(showName, showName, showTags, imageName), showImage, modifyNeedRefresh);
+        await RecipeService.addRecipe(new Recipe(showName, showTags, imageName), showImage, toggleModal);
       }
     }
 
@@ -138,7 +137,7 @@ export default function RecipeModal(props){
                 <TouchableOpacity onPress={toggleModal}>
                   <Icon name='close' color='grey' size={70} containerStyle={{marginLeft:20}}/>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => RecipeService.deleteItem(props.name, true, toggleModal)}>
+                <TouchableOpacity onPress={() => RecipeService.deleteItem(showName, showImage, toggleModal)}>
                   <Icon name='delete' color='grey' size={70}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={saveImage}>

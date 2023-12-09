@@ -1,6 +1,5 @@
 export default class Recipe {
-  constructor(id, name, tags, imageName='') {
-    this.id = id;
+  constructor(name, tags, imageName='') {
     this.name = name;
     this.tags = tags;
     this.imageName = imageName;

@@ -40,47 +40,20 @@ export default class RecipeService {
     });
   }
 
-  static async deleteItem(recipeName, whenDone) {
-    const allRecipes = await this.getAllRecipe();
-    if (allRecipes.length == 1) {
-      return;
-    }
-    const selectedIdList = allRecipes.filter((x) => x.name == recipeName);
-    if (selectedIdList.length == 0) {
-      return;
-    }
+  static async deleteItem(recipeName, imageName, whenDone) {
+    await deleteDoc(doc(db, 'recipes', recipeName));
 
-    const selectedRecipe = selectedIdList[0];
-    await deleteDoc(doc(db, 'recipes', selectedRecipe.id));
-
-    if (!deleteObject || selectedRecipe.imageName == '' || selectedRecipe.imageName == undefined) {
+    if (imageName == '') {
       whenDone(true);
       return;
     }
-    const desertRef = ref(storage, selectedRecipe.imageName);
+    const desertRef = ref(storage, imageName);
     await deleteObject(desertRef);
     whenDone(true);
   }
 
   static async getAllRecipe() {
-    let firstUrl = await this.getImageUrl("dd3354a2-dcd6-4225-b66b-1fd4a9faca34.jpeg");
-    let secondUrl = await this.getImageUrl("ananászoscsirke.jpg");
-    const recipeList = [
-      {
-        id: "Alfredo tészta",
-        imageName: firstUrl,
-        name: "Alfredotésör Alfredo tészta",
-        tags: ["Főétel"],
-      },
-      
-      {
-        id: "Ananászoscsirke",
-        imageName: secondUrl,
-        name: "Ananászos",
-        tags: ["Főétel"],
-      },
-    ];
-    /*const querySnapshot = await getDocs(collection(db, 'recipes'));
+    const querySnapshot = await getDocs(collection(db, 'recipes'));
 
     const imageUrlPromises = [];
 
@@ -88,7 +61,6 @@ export default class RecipeService {
       // Push the promise returned by getImageUrl into the array
       imageUrlPromises.push(this.getImageUrl(doc.data().imageName).then(imageUrl => {
         return new Recipe(
-          doc.id,
           doc.data().name,
           !Array.isArray(doc.data().tags) ? doc.data().tags.split(',').map((x) => x.trim()) : doc.data().tags,
           imageUrl
@@ -97,8 +69,7 @@ export default class RecipeService {
     });
   
     // Wait for all promises to resolve
-    const recipeList = await Promise.all(imageUrlPromises);
-*/
+    return await Promise.all(imageUrlPromises);
     return recipeList;
   }
 
