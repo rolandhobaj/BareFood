@@ -55,25 +55,14 @@ export default class RecipeService {
   static async getAllRecipe() {
     const querySnapshot = await getDocs(collection(db, 'recipes'));
 
-    const imageUrlPromises = [];
+    const allRecipe = querySnapshot.docs.map(doc => new Recipe(doc.data().name,
+    !Array.isArray(doc.data().tags) ? doc.data().tags.split(',').map((x) => x.trim()) : doc.data().tags,
+    doc.data().imageName));
 
-    querySnapshot.forEach((doc) => {
-      // Push the promise returned by getImageUrl into the array
-      imageUrlPromises.push(this.getImageUrl(doc.data().imageName).then(imageUrl => {
-        return new Recipe(
-          doc.data().name,
-          !Array.isArray(doc.data().tags) ? doc.data().tags.split(',').map((x) => x.trim()) : doc.data().tags,
-          imageUrl
-        );
-      }));
-    });
-  
-    // Wait for all promises to resolve
-    return await Promise.all(imageUrlPromises);
-    return recipeList;
+    return allRecipe;
   }
 
-  static async getImageUrl(name) {
+  static async getImageUrl(name, whenDone) {
     if (name == undefined || name=='') {
       return '';
     }
@@ -86,6 +75,8 @@ export default class RecipeService {
         .catch((error) => {
           console.log(error);
         });
+
+    whenDone(downloadedUrl);
     return downloadedUrl;
   }
 }

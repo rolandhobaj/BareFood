@@ -1,12 +1,11 @@
 import { React, useState, useEffect } from 'react'
 import { ScrollView, Text, ActivityIndicator } from 'react-native';
-import { Card } from 'react-native-paper';
 
 import RecipeService from '../Service/RecipeService'
 import filter from '../Common/Filter'
 import useStore from '../Model/Store'
-import Recipe from '../Model/Recipe'
 import RecipeModal from '../View/RecipeModal'
+import RecipeCard from '../View/RecipeCard'
 import { View } from 'react-native';
 
 async function downloadList(whenDone){
@@ -34,7 +33,9 @@ export default function FoodFlatList() {
         const modifySelectedRecipe = useStore((state) => state.modifySelectedRecipe)
 
         useEffect(() => {
-            downloadList(setRecipe);
+            downloadList(data => {
+                setRecipe(data);
+            });
           }, []);
         
         const handlePress = (recipe) => {
@@ -58,13 +59,8 @@ export default function FoodFlatList() {
                 ) : (
                     <View>
                         <ScrollView contentContainerStyle={{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', padding: 20}}>
-                            {mappedRecipes.map((card, index) => (
-                                <Card key={card.imageName} mode='outline' style={{width: '48%', marginBottom:12, backgroundColor: 'rgba(18,57,6,0.35)'}} onPress={() => handlePress(new Recipe(card.name, card.tags.join(", "), card.imageName))}>
-                                    <Card.Cover source={{ uri: card.imageName} }  style={{ margin: 8, height: 120}}/>
-                                    <Card.Content style={{ alignItems: 'center', justifyContent: 'center' }}>
-                                        <Text style={{ fontSize: 15, color: 'white', fontWeight: 'bold', textAlign: 'center'}}>{card.name}</Text>
-                                </Card.Content>
-                                </Card>))}
+                            {mappedRecipes.map((recipe) => (
+                                <RecipeCard key={recipe.name} name={recipe.name} tags={recipe.tags} imageName={recipe.imageName} setMenuVisible={setMenuVisible}/>))}
                         </ScrollView>
                     <RecipeModal title="Recept módosítása" isVisible={isMenuVisible} hideModal={() => {setMenuVisible(false); setRecipe([]); downloadList(setRecipe)}}/>
                     </View>
