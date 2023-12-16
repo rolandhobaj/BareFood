@@ -4,7 +4,6 @@ import { ScrollView, Text, ActivityIndicator } from 'react-native';
 import RecipeService from '../Service/RecipeService'
 import filter from '../Common/Filter'
 import useStore from '../Model/Store'
-import RecipeModal from '../View/RecipeModal'
 import RecipeCard from '../View/RecipeCard'
 import { View } from 'react-native';
 
@@ -29,19 +28,12 @@ function getFilteredRecipes(data, tag){
 export default function FoodFlatList() {
         const [recipes, setRecipe] = useState([]);
         const searchedTag = useStore((state) => state.searchedTag)
-        const [isMenuVisible, setMenuVisible] = useState(false);
-        const modifySelectedRecipe = useStore((state) => state.modifySelectedRecipe)
 
         useEffect(() => {
             downloadList(data => {
                 setRecipe(data);
             });
           }, []);
-        
-        const handlePress = (recipe) => {
-            modifySelectedRecipe(recipe);
-            setMenuVisible(true);
-          };
 
         const isEmptyArray = (arr) => arr.length === 0;
 
@@ -57,16 +49,12 @@ export default function FoodFlatList() {
                         <Text style={{ marginLeft: 10, color: "green", fontSize: 25}}>Minnyá na..</Text>
                     </View>
                 ) : (
-                    <View>
-                        <ScrollView contentContainerStyle={{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', padding: 20}}>
-                            {mappedRecipes.map((recipe) => (
-                                <RecipeCard key={recipe.name} name={recipe.name} tags={recipe.tags} imageName={recipe.imageName} setMenuVisible={setMenuVisible}/>))}
-                        </ScrollView>
-                    <RecipeModal title="Recept módosítása" isVisible={isMenuVisible} hideModal={() => {setMenuVisible(false); setRecipe([]); downloadList(setRecipe)}}/>
-                    </View>
+                    <ScrollView contentContainerStyle={{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', padding: 20}}>
+                        {mappedRecipes.map((recipe) => (
+                            <RecipeCard key={recipe.name} name={recipe.name} tags={recipe.tags} imageName={recipe.imageName}/>))}
+                    </ScrollView>
                 )
             }
-           
          </View>
         )
 };
