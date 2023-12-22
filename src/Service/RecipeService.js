@@ -43,15 +43,13 @@ export default class RecipeService {
   static async deleteItem(recipeName, imageName, whenDone) {
     await deleteDoc(doc(db, 'recipes', recipeName));
 
-    console.log(recipeName + " " + imageName)
     if (imageName == '') {
       whenDone(true);
       return;
     }
 
     const desertRef = ref(storage, imageName);
-    await deleteObject(desertRef);
-    whenDone(true);
+    deleteObject(desertRef).then(whenDone(true));
   }
 
   static async getAllRecipe() {

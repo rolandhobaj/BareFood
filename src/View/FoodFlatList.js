@@ -29,6 +29,7 @@ export default function FoodFlatList() {
         const [recipes, setRecipe] = useState([]);
         const searchedTag = useStore((state) => state.searchedTag)
         const needRefresh = useStore((state) => state.needRefresh)
+        const modifyNeedRefresh = useStore(s => s.modifyNeedRefresh);
 
         const isEmptyArray = (arr) => arr.length === 0;
 
@@ -36,6 +37,7 @@ export default function FoodFlatList() {
                 if (isEmptyArray(recipes) || needRefresh){
                 downloadList(data => {
                     setRecipe(data);
+                    modifyNeedRefresh(false);
                 });
             }
           }, [needRefresh]);
