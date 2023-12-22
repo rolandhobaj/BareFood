@@ -51,7 +51,11 @@ export default function RecipeModal(props){
         props.hideModal();
      };
 
-     
+     const toggleModalWithRefresh = async () => {
+      props.hideModal();
+      modifyNeedRefresh(true);
+   };
+
     showName = selectedRecipe.name;
     if (name != null && name != showName){
       showName = name;
@@ -62,7 +66,7 @@ export default function RecipeModal(props){
       showTags = tags;
     }
 
-    showImage = selectedRecipe.imageName;
+    showImage = selectedRecipe.imageUri;
     if (image != null && image != showImage){
       showImage = image;
     }
@@ -78,9 +82,10 @@ export default function RecipeModal(props){
       if (selectedRecipe.name != "" && selectedRecipe.name != undefined){
         let splitBySlash = showImage.split('/');
         let t = splitBySlash[splitBySlash.length - 1].split('?')[0];
-        await RecipeService.deleteItem(selectedRecipe.name, selectedRecipe.imageName, false, (_) => RecipeService.addRecipe(new Recipe(showName, showTags, t), showImage, toggleModal));
+        await RecipeService.deleteItem(selectedRecipe.name, selectedRecipe.imageName, false, (_) => RecipeService.addRecipe(new Recipe(showName, showTags, t), showImage, toggleModalWithRefresh));
       } else {
-        await RecipeService.addRecipe(new Recipe(showName, showTags, imageName), showImage, toggleModal);
+        console.log(imageName);
+        await RecipeService.addRecipe(new Recipe(showName, showTags, imageName), showImage, toggleModalWithRefresh);
       }
     }
 
@@ -99,7 +104,6 @@ export default function RecipeModal(props){
          setImage(result.assets[0].uri);
        }
      };
-
 
     return (
         <Modal 
@@ -137,7 +141,7 @@ export default function RecipeModal(props){
                 <TouchableOpacity onPress={toggleModal}>
                   <Icon name='close' color='grey' size={70} containerStyle={{marginLeft:20}}/>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => RecipeService.deleteItem(showName, showImage, toggleModal)}>
+                <TouchableOpacity onPress={() => RecipeService.deleteItem(showName, selectedRecipe.imageName, toggleModalWithRefresh)}>
                   <Icon name='delete' color='grey' size={70}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={saveImage}>

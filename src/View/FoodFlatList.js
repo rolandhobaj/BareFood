@@ -28,14 +28,17 @@ function getFilteredRecipes(data, tag){
 export default function FoodFlatList() {
         const [recipes, setRecipe] = useState([]);
         const searchedTag = useStore((state) => state.searchedTag)
-
-        useEffect(() => {
-            downloadList(data => {
-                setRecipe(data);
-            });
-          }, []);
+        const needRefresh = useStore((state) => state.needRefresh)
 
         const isEmptyArray = (arr) => arr.length === 0;
+
+        useEffect(() => {
+                if (isEmptyArray(recipes) || needRefresh){
+                downloadList(data => {
+                    setRecipe(data);
+                });
+            }
+          }, [needRefresh]);
 
         var mappedRecipes = getFilteredRecipes(recipes, searchedTag);
 

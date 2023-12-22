@@ -28,7 +28,7 @@ export default function RecipeCard(props) {
 
 
     return (
-        <Card key={props.name} mode='outline' style={{width: '48%', marginBottom:12, backgroundColor: 'rgba(18,57,6,0.35)'}} onPress={() => handlePress(new Recipe(props.name, props.tags.join(", "), imageUri))}>
+        <Card key={props.name} mode='outline' style={{width: '48%', marginBottom:12, backgroundColor: 'rgba(18,57,6,0.35)'}} onPress={() => handlePress(new Recipe(props.name, props.tags.join(", "), props.imageName, imageUri))}>
             <Card.Cover source={{ uri: imageUri }} style={{ margin: 8, height: 120 }}/>
             <Card.Content style={{ alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontSize: 15, color: 'white', fontWeight: 'bold', textAlign: 'center'}}>{props.name}</Text>

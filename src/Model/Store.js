@@ -2,7 +2,7 @@ import create from 'zustand';
 
 const useStore = create((set) => ({
   searchedTag: '',
-  needRefresh: true,
+  needRefresh: false,
   modifyTag: (tag) => set((state) => ({searchedTag: tag})),
   modifyNeedRefresh: (refresh) => set((state) => ({needRefresh: refresh})),
 
