@@ -4,6 +4,7 @@ import { React, useState, useEffect } from 'react'
 import RecipeModal from '../View/RecipeModal'
 
 import Recipe from '../Model/Recipe'
+
 import useStore from '../Model/Store'
 import RecipeService from '../Service/RecipeService'
 
@@ -32,7 +33,7 @@ export default function RecipeCard(props) {
             <Card.Cover source={{ uri: imageUri }} style={{ margin: 8, height: 120 }}/>
             <Card.Content style={{ alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontSize: 15, color: 'white', fontWeight: 'bold', textAlign: 'center'}}>{props.name}</Text>
-                <RecipeModal title="Recept módosítása" isVisible={isMenuVisible} hideModal={() => {setMenuVisible(false);}}/>
+                <RecipeModal title="Recept módosítása" mode = "editing" isVisible={isMenuVisible} hideModal={() => {setMenuVisible(false);}}/>
             </Card.Content>
         </Card>
     )

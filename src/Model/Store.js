@@ -1,13 +1,15 @@
 import create from 'zustand';
+import Recipe from '../Model/Recipe'
 
 const useStore = create((set) => ({
   searchedTag: '',
   needRefresh: false,
-  modifyTag: (tag) => set((state) => ({searchedTag: tag})),
-  modifyNeedRefresh: (refresh) => set((state) => ({needRefresh: refresh})),
+  modifyTag: (tag) => set((state) => ({ searchedTag: tag })),
+  modifyNeedRefresh: (refresh) => set((state) => ({ needRefresh: refresh })),
 
-  selectedRecipe: null,
-  modifySelectedRecipe: (recipe) => set((state) => ({selectedRecipe: recipe})),
+  selectedRecipe: new Recipe(),
+  modifySelectedRecipe: (recipe) => set((state) => ({ selectedRecipe: recipe })),
+  modifySelectedRecipeUpdater: (updater) => set((state) => ({ selectedRecipe: updater(state.selectedRecipe) })),
 }));
 
 export default useStore;

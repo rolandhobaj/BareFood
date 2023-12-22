@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { TouchableOpacity, StyleSheet, View, Text, Button, TextInput, Image, Keyboard } from 'react-native';
 import { Icon } from '@rneui/themed';
 import RecipeModal from '../View/RecipeModal'
+import Recipe from '../Model/Recipe'
+
 import useStore from '../Model/Store'
 
 export default function NewRecipeButton(){
@@ -12,11 +14,11 @@ export default function NewRecipeButton(){
       <View>
        <TouchableOpacity
           testID='showModalButton'
-          onPress={_ => {modifySelectedRecipe(null); setIsModalVisible(true)}}
+          onPress={_ => {modifySelectedRecipe(new Recipe()); setIsModalVisible(true)}}
           style={styles.roundButton}>
              <Icon name='add' color='white' size={40} containerStyle={{margin:5}}/>
         </TouchableOpacity>
-        <RecipeModal title="Új recept hozzáadás" isVisible={isModalVisible} testID='recipeModal' hideModal={() => setIsModalVisible(false)}/>
+        <RecipeModal title="Új recept hozzáadás" mode="new" isVisible={isModalVisible} testID='recipeModal' hideModal={() => setIsModalVisible(false)}/>
       </View>
     );
 }

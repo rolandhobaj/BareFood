@@ -9,14 +9,14 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 export default class RecipeService {
-  static async addRecipe(recipe, imagePath, whenDone) {
+  static async addRecipe(recipe, whenDone) {
     await setDoc(doc(db, 'recipes', recipe.name), {
       name: recipe.name,
       tags: recipe.tags,
       imageName: recipe.imageName,
     });
 
-    await this.uploadFile(imagePath, recipe.imageName);
+    await this.uploadFile(recipe.imageUri, recipe.imageName);
     whenDone(true);
   }
 
