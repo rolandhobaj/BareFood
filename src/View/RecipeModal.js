@@ -14,6 +14,7 @@ export default function RecipeModal(props) {
   const modifySelectedRecipe = useStore((state) => state.modifySelectedRecipeUpdater)
 
   let selectedRecipe = useStore((state) => state.selectedRecipe);
+  let selectedRecipeOriginalName = useStore((state) => state.selectedRecipeOriginalName);
 
   const modifyName = (name) => modifySelectedRecipe(selected => ({ ...selected, name }));
   const modifyTags = (tags) => modifySelectedRecipe(selected => ({ ...selected, tags }));
@@ -50,14 +51,12 @@ export default function RecipeModal(props) {
   };
 
   const saveImage = async () => {
-    if (selectedRecipe.name == "" || selectedRecipe.tags == "") {
+    if (selectedRecipeOriginalName == "", selectedRecipe.name == "" || selectedRecipe.tags == "") {
       return
     }
 
     if (props.mode == "editing") {
-      let splitBySlash = selectedRecipe.recipeUri.split('/');
-      let t = splitBySlash[splitBySlash.length - 1].split('?')[0];
-      await RecipeService.deleteItem(selectedRecipe.name, selectedRecipe.imageName, false, (_) => RecipeService.addRecipe(selectedRecipe, toggleModalWithRefresh));
+      await RecipeService.deleteItem(selectedRecipeOriginalName, selectedRecipe.imageName, () => RecipeService.addRecipe(selectedRecipe, toggleModalWithRefresh), false);
     } else {
       await RecipeService.addRecipe(selectedRecipe, toggleModalWithRefresh);
     }

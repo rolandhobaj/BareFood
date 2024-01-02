@@ -10,6 +10,9 @@ const useStore = create((set) => ({
   selectedRecipe: new Recipe(),
   modifySelectedRecipe: (recipe) => set((state) => ({ selectedRecipe: recipe })),
   modifySelectedRecipeUpdater: (updater) => set((state) => ({ selectedRecipe: updater(state.selectedRecipe) })),
+
+  selectedRecipeOriginalName: '',
+  modifySelectedRecipeOriginalName: (name) => set((state) => ({ selectedRecipeOriginalName: name })),
 }));
 
 export default useStore;

@@ -11,12 +11,14 @@ import RecipeService from '../Service/RecipeService'
 export default function RecipeCard(props) {
 
     const modifySelectedRecipe = useStore((state) => state.modifySelectedRecipe)
+    const modifySelectedRecipeOriginalName = useStore((state) => state.modifySelectedRecipeOriginalName)
     const [imageUri, setImageUri] = useState(null);
     const [isMenuVisible, setMenuVisible] = useState(false);
 
 
     const handlePress = (recipe) => {
         modifySelectedRecipe(recipe);
+        modifySelectedRecipeOriginalName(recipe.name);
         setMenuVisible(true);
       };
 

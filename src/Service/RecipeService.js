@@ -40,7 +40,7 @@ export default class RecipeService {
     });
   }
 
-  static async deleteItem(recipeName, imageName, whenDone) {
+  static async deleteItem(recipeName, imageName, whenDone, deleteImage = true) {
     await deleteDoc(doc(db, 'recipes', recipeName));
 
     if (imageName == '') {
@@ -48,8 +48,13 @@ export default class RecipeService {
       return;
     }
 
-    const desertRef = ref(storage, imageName);
-    deleteObject(desertRef).then(whenDone(true));
+    if (deleteImage){
+      const desertRef = ref(storage, imageName);
+      deleteObject(desertRef).then(whenDone(true));
+      return;
+    }
+
+    whenDone(true)
   }
 
   static async getAllRecipe() {
